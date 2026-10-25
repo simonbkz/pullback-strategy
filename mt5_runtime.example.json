@@ -791,7 +791,13 @@
     "_portfolio_heat_note": "30% (was 19.5%) -- caps total open-position worst-case at 30% of equity. At base=12%, this allows ~2.5 simultaneous trades.",
     "magic_number": 20260515,
     "comment": "fx-edge v_protected",
-    "_max_conc_note": "Reduced 9 -> 3. Combined with correlation_skip below, forces the strategy to hold at most 3 uncorrelated positions."
+    "_max_conc_note": "Reduced 9 -> 3. Combined with correlation_skip below, forces the strategy to hold at most 3 uncorrelated positions.",
+    "fill_sanity": {
+      "_comment": "2026-10-25 audit: a stale signal (bar evaluated 16 min late after a position closed) was filled 1.7R from the signal close with RR 0.29. Gate at order time: fill must be within max_drift_R of the signal bar close and actual reward-to-risk >= min_rr, else journal stale_fill. Bars that close while in position are now journaled in_position and burned (backtest semantics).",
+      "enabled": true,
+      "max_drift_R": 0.3,
+      "min_rr": 2.0
+    }
   },
   "regime_predictor": {
     "train_window": 2000,

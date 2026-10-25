@@ -165,10 +165,15 @@ def main() -> int:
     # --- 3. Open positions vs concurrency cap ---
     open_positions = mt5.positions_get() or []
     ours_open = [p for p in open_positions if p.magic == magic]
+    # Scale-in adds are excluded from the cap by live_trader (2026-10-22);
+    # count mains only here too, or every 6-mains-plus-one-add state is a
+    # false red (2026-10-25 audit).
+    ours_mains = [p for p in ours_open
+                  if not (getattr(p, "comment", "") or "").startswith("fx-edge scale_in")]
     max_conc = int(cfg.get("execution", {}).get("max_concurrent_positions", 5))
-    info.append(f"open positions (our magic): {len(ours_open)} / cap {max_conc}")
-    if len(ours_open) > max_conc:
-        alerts_red.append(f"Concurrency exceeded: {len(ours_open)} open vs cap {max_conc}")
+    info.append(f"open positions (our magic): {len(ours_mains)} mains + {len(ours_open) - len(ours_mains)} adds / cap {max_conc}")
+    if len(ours_mains) > max_conc:
+        alerts_red.append(f"Concurrency exceeded: {len(ours_mains)} mains open vs cap {max_conc}")
 
     # --- 4. Orphan check (open at broker but missing from runtime_state.position_meta) ---
     pos_meta = {int(k): v for k, v in (rt.get("position_meta") or {}).items()}
@@ -182,7 +187,8 @@ def main() -> int:
     stale = []
     for p in ours_open:
         try:
-            age_h = (now.timestamp() - float(p.time)) / 3600.0
+            # position.time is BROKER time -- compare in broker time
+            age_h = (now.timestamp() + cx._get_broker_offset() - float(p.time)) / 3600.0
         except Exception:
             continue
         if age_h <= args.stale_bars:

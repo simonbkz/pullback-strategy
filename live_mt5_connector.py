@@ -231,12 +231,65 @@ def _get_broker_offset() -> int:
     return _broker_offset_seconds
 
 
+def _eet_summer_bounds_broker_label(year: int) -> tuple[int, int]:
+    """Broker-LABEL epochs (naive, as MT5 stamps them) between which HFM's
+    server clock is on EEST (+3h). The EU flip happens at 01:00 UTC; in broker
+    labels that is 03:00 -> 04:00 in March and 04:00 -> 03:00 in October, so a
+    label >= 03:00 on the March Sunday is summer and a label >= 03:00 on the
+    October Sunday is winter (the ambiguous 03:xx hour on the October Sunday
+    is assigned to winter; FX is closed then, only crypto trades)."""
+    import calendar
+    from datetime import datetime, timezone as _tz
+    def last_sunday(m):
+        d = max(wk[-1] for wk in calendar.monthcalendar(year, m))
+        return int(datetime(year, m, d, 3, 0, tzinfo=_tz.utc).timestamp())
+    return last_sunday(3), last_sunday(10)
+
+
+def broker_epochs_to_utc(epochs) -> "np.ndarray":
+    """Vectorised broker-label epoch -> UTC epoch, applying the DST offset that
+    was in force AT EACH BAR (2026-10-25 audit: a single scalar offset mislabels
+    every bar on the other side of a DST flip by one hour, which shifts the
+    H1->H4 resample grouping for the whole history window). Honour the
+    FXE_BROKER_OFFSET_SECONDS override as a scalar. If a fresh tick says the
+    broker is NOT on the calendar offset right now (HFM deviating from the EU
+    rule), fall back to the scalar detection and warn once."""
+    import os
+    import numpy as np
+    arr = np.asarray(epochs, dtype="int64")
+    env = os.environ.get("FXE_BROKER_OFFSET_SECONDS")
+    if env is not None:
+        try:
+            return arr - int(env)
+        except ValueError:
+            pass
+    cur = _get_broker_offset()
+    if cur != _eet_fallback_offset():
+        global _dst_rule_warned
+        if not globals().get("_dst_rule_warned"):
+            print(f"[offset] WARNING broker offset {cur/3600:+.0f}h differs from the EET calendar rule "
+                  f"({_eet_fallback_offset()/3600:+.0f}h) -- using scalar offset for all bars")
+            _dst_rule_warned = True
+        return arr - cur
+    if arr.size == 0:
+        return arr
+    out = arr - 7200   # winter default
+    import datetime as _dt
+    years = range(_dt.datetime.utcfromtimestamp(int(arr.min())).year,
+                  _dt.datetime.utcfromtimestamp(int(arr.max())).year + 1)
+    for y in years:
+        lo, hi = _eet_summer_bounds_broker_label(y)
+        m = (arr >= lo) & (arr < hi)
+        out[m] = arr[m] - 10800
+    return out
+
+
 def _fetch_h1_raw(symbol: str, n_bars: int) -> pd.DataFrame:
     rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_H1, 0, n_bars)
     if rates is None or len(rates) == 0:
         return pd.DataFrame()
     df = pd.DataFrame(rates)
-    df["time"] = pd.to_datetime(df["time"] - _get_broker_offset(), unit="s", utc=True)
+    df["time"] = pd.to_datetime(broker_epochs_to_utc(df["time"].values), unit="s", utc=True)
     df = df.set_index("time")
     df = df.rename(columns={"tick_volume": "volume"})
     keep = [c for c in ("open", "high", "low", "close", "volume") if c in df.columns]
@@ -263,7 +316,7 @@ def fetch_bars(symbol: str, timeframe, n_bars: int = 5000) -> pd.DataFrame:
     if rates is None or len(rates) == 0:
         return pd.DataFrame()
     df = pd.DataFrame(rates)
-    df["time"] = pd.to_datetime(df["time"] - _get_broker_offset(), unit="s", utc=True)
+    df["time"] = pd.to_datetime(broker_epochs_to_utc(df["time"].values), unit="s", utc=True)
     df = df.set_index("time")
     df = df.rename(columns={"tick_volume": "volume"})
     keep = [c for c in ("open", "high", "low", "close", "volume") if c in df.columns]

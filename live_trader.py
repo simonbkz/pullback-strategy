@@ -1247,11 +1247,15 @@ def consider_instrument(ins: str, cfg: dict, state: State, cap_blocked: bool = F
     if broker is None: return
     exe = cfg["execution"]
 
-    # Already in a trade or with a pending order -- leave it alone
-    if cx.has_open_position(broker, exe["magic_number"]):
-        return
-    if cx.has_pending_order(broker, exe["magic_number"]):
-        return
+    # Already in a trade or with a pending order. We no longer return here
+    # (2026-10-25 audit): the bar was left un-marked, so when the position
+    # closed mid-bar the stale signal was taken minutes later at a chased
+    # price (ETHUSD 2026-10-24: filled 1.7R from the signal close, RR 0.29).
+    # Backtest semantics = in position at bar close means no entry on that
+    # bar. So: evaluate the bar once, journal the signal as `in_position`
+    # for counterfactuals, and burn the bar.
+    in_pos = (cx.has_open_position(broker, exe["magic_number"])
+              or cx.has_pending_order(broker, exe["magic_number"]))
 
     # Only act on a NEW closed H1 bar. NOTE: we do NOT yet mark this bar as
     # 'seen' -- that happens only after we've successfully evaluated it past
@@ -1333,6 +1337,13 @@ def consider_instrument(ins: str, cfg: dict, state: State, cap_blocked: bool = F
     # (Was previously only set just before lot sizing, causing NameError when
     #  heat_cap / risk_zero / dd_circuit_breaker paths fired earlier.)
     cur_price = tick.ask if side == "long" else tick.bid
+
+    if in_pos:
+        _SPREAD_PENDING.pop(ins, None)
+        print(f"  [{ins}] skip: signal while in position -- journaled in_position (bar burned)")
+        _log_signal(sig_ts, ins, side, float(cur_price), float(sl), float(tp),
+                     abs(cur_price - sl), "skipped", "in_position")
+        return
 
     # Disabled instrument: journal as tier_disabled FIRST (moved up 2026-10-22 --
     # it used to sit after the hour/news/cap gates, so disabled instruments'
@@ -1428,6 +1439,30 @@ def consider_instrument(ins: str, cfg: dict, state: State, cap_blocked: bool = F
         _SPREAD_PENDING[ins] = (closed, sig_ts, side, float(sl), float(tp), float(cur_price), float(spread_pips))
         return
     _SPREAD_PENDING.pop(ins, None)
+
+    # FILL SANITY (2026-10-25 audit): the signal's SL/TP are absolute levels
+    # computed from the bar close. If the live price has already run away
+    # from that close (late evaluation, long spread retry), the trade would
+    # be entered with a shrunken reward-to-risk. Require the fill to sit
+    # within max_drift_R of the signal close and the actual RR to stay above
+    # min_rr; otherwise journal `stale_fill` and burn the bar.
+    fs = cfg.get("execution", {}).get("fill_sanity", {})
+    if fs.get("enabled", True):
+        try:
+            sig_close = float(ltf["close"].loc[sig_ts])
+        except Exception:
+            sig_close = float(cur_price)
+        planned_R = abs(sig_close - sl)
+        drift_R = abs(float(cur_price) - sig_close) / planned_R if planned_R > 0 else 0.0
+        live_risk = abs(float(cur_price) - sl)
+        rr_actual = abs(tp - float(cur_price)) / live_risk if live_risk > 0 else 0.0
+        if drift_R > float(fs.get("max_drift_R", 0.3)) or rr_actual < float(fs.get("min_rr", 2.0)):
+            print(f"  [{ins}] skip: stale fill -- price drifted {drift_R:.2f}R from signal close "
+                  f"{sig_close:.5f} (now {cur_price:.5f}), actual RR {rr_actual:.2f} "
+                  f"(limits drift<={fs.get('max_drift_R', 0.3)}R, RR>={fs.get('min_rr', 2.0)})")
+            _log_signal(sig_ts, ins, side, float(cur_price), float(sl), float(tp),
+                         abs(cur_price - sl), "skipped", "stale_fill")
+            return
 
     # Resolve effective tier for THIS instrument: defaults override-merged with global
     overrides = cfg.get("tier_overrides", {}).get(ins, {})

@@ -81,7 +81,9 @@ for r in rows:
     if rates is None or len(rates) == 0:
         n_fail += 1; continue
     df = pd.DataFrame(rates)
-    df["time"] = pd.to_datetime(df["time"], unit='s', utc=True) - pd.Timedelta(hours=offset)
+    # per-bar DST-aware conversion (2026-10-25): a scalar offset mislabels bars
+    # on the other side of a DST flip by one hour
+    df["time"] = pd.to_datetime(cx.broker_epochs_to_utc(df["time"].values), unit='s', utc=True)
     df = df.set_index("time").sort_index()
     seg = df[df.index > sig_dt].head(MAX_HOLD_BARS)
     if seg.empty:
