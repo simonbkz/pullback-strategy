@@ -1,0 +1,95 @@
+{
+  "_generated": "2026-05-06T13:33:39.926225",
+  "winner_variant": "V0_baseline",
+  "base_risk_pct": 4.0,
+  "test_period_return_pct": 23277.009563612115,
+  "test_period_max_dd_pct": 49.74331170045259,
+  "test_period_trades": 521,
+  "indices_basket": [
+    "XAUUSD",
+    "US500",
+    "DE40",
+    "JP225",
+    "CHFJPY",
+    "HK50",
+    "US100",
+    "ETHUSD",
+    "USOIL"
+  ],
+  "indices_be_configs": {
+    "XAUUSD": [
+      0.5,
+      0.1
+    ],
+    "US500": [
+      1.0,
+      0.1
+    ],
+    "DE40": [
+      1.0,
+      0.1
+    ],
+    "JP225": null,
+    "CHFJPY": null,
+    "HK50": [
+      1.5,
+      0.1
+    ],
+    "US100": [
+      0.5,
+      0.1
+    ],
+    "ETHUSD": [
+      0.5,
+      0.1
+    ],
+    "USOIL": [
+      2.0,
+      0.1
+    ]
+  },
+  "indices_delay_bars": {
+    "XAUUSD": 8,
+    "US500": 12,
+    "DE40": 6,
+    "JP225": 4,
+    "CHFJPY": 12,
+    "HK50": 4,
+    "US100": 2,
+    "ETHUSD": 24,
+    "USOIL": 24
+  },
+  "emergency_mult_overrides": {
+    "XAUUSD": 1.5,
+    "ETHUSD": 2.0
+  },
+  "vol_parity_weights": {
+    "XAUUSD": 1.1954,
+    "US500": 0.8726,
+    "DE40": 0.9936,
+    "JP225": 0.9482,
+    "CHFJPY": 0.9255,
+    "HK50": 1.0549,
+    "US100": 1.2801,
+    "ETHUSD": 0.9028,
+    "USOIL": 0.8269
+  },
+  "gold_toxic_hours_utc": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    19,
+    20
+  ],
+  "corr_threshold": 0.7,
+  "max_per_corr_group": 1
+}

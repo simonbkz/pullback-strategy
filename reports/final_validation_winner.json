@@ -1,0 +1,27 @@
+{
+  "idealized": {
+    "slip": 1.0,
+    "risk": 6.9,
+    "trades": 685.0,
+    "return_pct": 19883573.192178454,
+    "max_dd_pct": 69.20354864611409
+  },
+  "realistic_1_5x": {
+    "slip": 1.5,
+    "risk": 6.9,
+    "trades": 685.0,
+    "return_pct": 8826970.634497661,
+    "max_dd_pct": 69.5690652561808
+  },
+  "per_asset": {
+    "XAUUSD": "xagg_fast",
+    "US500": "xagg",
+    "DE40": "xagg_fast",
+    "JP225": "vagg_slow",
+    "CHFJPY": "xagg",
+    "HK50": "ultra_slow",
+    "US100": "xagg_breathing",
+    "ETHUSD": "vagg",
+    "USOIL": "decay_off"
+  }
+}

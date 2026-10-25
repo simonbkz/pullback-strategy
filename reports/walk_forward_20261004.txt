@@ -1,0 +1,178 @@
+====================================================================================================
+EXPANDED WALK-FORWARD BACKTEST
+====================================================================================================
+
+Data sources:
+  XAUUSD  -> MT5-cache (2023-12-04 -> 2026-04-28, 13711 bars)
+  US500   -> EODHD (2020-10-12 -> 2026-09-30, 15995 bars)
+  DE40    -> EODHD (2020-10-12 -> 2026-10-01, 16304 bars)
+  JP225   -> EODHD (2020-10-12 -> 2026-10-01, 11513 bars)
+  CHFJPY  -> EODHD (2020-10-11 -> 2026-10-01, 38674 bars)
+  US100   -> EODHD (2020-10-12 -> 2026-09-30, 12479 bars)
+  ETHUSD  -> EODHD (2020-10-23 -> 2026-10-01, 53646 bars)
+  USOIL   -> MT5-cache (2023-12-04 -> 2026-04-28, 13463 bars)
+  XAGUSD  -> MT5-cache (2023-12-04 -> 2026-04-28, 13708 bars)
+  BTCUSD  -> EODHD (2020-10-23 -> 2026-10-01, 53666 bars)
+  UKOIL   -> MT5-cache (2023-12-04 -> 2026-04-28, 13431 bars)
+  GBPUSD  -> EODHD (2020-10-11 -> 2026-10-01, 38663 bars)
+  EURUSD  -> EODHD (2020-10-11 -> 2026-10-01, 38665 bars)
+  US30    -> EODHD (2020-10-12 -> 2026-09-30, 12481 bars)
+  US2000  -> EODHD (2020-10-12 -> 2023-07-17, 5548 bars)
+  UK100   -> EODHD (2020-10-12 -> 2023-07-17, 7275 bars)
+  EU50    -> EODHD (2020-10-12 -> 2026-10-01, 16030 bars)
+  XPTUSD  -> MT5-cache (2023-12-04 -> 2026-04-28, 13701 bars)
+  EURJPY  -> EODHD (2020-10-11 -> 2026-10-01, 38692 bars)
+
+====================================================================================================
+PER-INSTRUMENT STRATEGY MEAN-R BY WINDOW
+====================================================================================================
+
+XAUUSD (current assignment: breakout)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.024(233)   +0.024(233)   +0.088(193)   +0.195( 98)
+    breakout   +0.133(231)   +0.133(231)   +0.186(192)   +0.187( 99)
+    momentum   +0.160(196)   +0.160(196)   +0.201(158)   +0.313( 74)
+
+US500 (current assignment: momentum)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.148(272)   +0.192(161)   +0.098(110)   -0.249( 46)
+    breakout   +0.089(324)   +0.178(189)   +0.029(107)   -0.273( 38)
+    momentum   +0.295(276)   +0.344(159)   +0.283(100)   +0.219( 32)
+
+DE40 (current assignment: momentum)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.001(259)   -0.055(138)   -0.045( 91)   -0.060( 37)
+    breakout   +0.092(292)   +0.127(163)   +0.053( 99)   -0.093( 46)
+    momentum   +0.159(278)   +0.213(160)   +0.145( 88)   +0.131( 40)
+
+JP225 (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.123(232)   +0.128(133)   +0.212( 82)   +0.274( 46)
+    breakout   +0.087(207)   +0.137(128)   +0.216( 89)   -0.143( 43)
+    momentum   +0.194(202)   +0.184(120)   +0.183( 83)   -0.069( 47)
+
+CHFJPY (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.054(405)   +0.084(251)   +0.079(176)   -0.026( 76)
+    breakout   -0.033(292)   -0.085(192)   -0.162(133)   -0.019( 61)
+    momentum   -0.055(458)   -0.031(274)   -0.067(185)   +0.039( 77)
+
+US100 (current assignment: momentum)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.107(212)   +0.232(118)   +0.200( 73)   -0.052( 33)
+    breakout   +0.219(229)   +0.221(135)   +0.098( 87)   -0.106( 37)
+    momentum   +0.313(201)   +0.431(119)   +0.346( 75)   -0.097( 31)
+
+ETHUSD (current assignment: breakout)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.015(735)   +0.036(445)   +0.157(271)   +0.160(132)
+    breakout   +0.016(740)   +0.043(453)   +0.169(292)   +0.097(135)
+    momentum   +0.016(761)   +0.088(431)   +0.086(291)   +0.184(131)
+
+USOIL (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.036(240)   -0.036(240)   -0.054(193)   +0.192( 85)
+    breakout   -0.096(230)   -0.096(230)   -0.086(180)   +0.053( 94)
+    momentum   -0.172(207)   -0.172(207)   -0.188(168)   +0.116( 75)
+
+XAGUSD (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.024(213)   -0.024(213)   -0.078(173)   +0.265( 71)
+    breakout   +0.002(222)   +0.002(222)   -0.012(180)   +0.075(105)
+    momentum   -0.071(193)   -0.071(193)   -0.094(163)   +0.182( 90)
+
+BTCUSD (current assignment: breakout)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.031(729)   +0.005(444)   +0.010(287)   -0.001(161)
+    breakout   -0.015(753)   +0.036(459)   -0.033(311)   +0.017(143)
+    momentum   -0.040(756)   +0.055(451)   -0.016(306)   -0.002(136)
+
+UKOIL (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.147(182)   -0.147(182)   -0.156(146)   +0.133( 62)
+    breakout   -0.141(218)   -0.141(218)   -0.147(173)   +0.106( 94)
+    momentum   -0.114(201)   -0.114(201)   -0.051(157)   +0.018( 81)
+
+GBPUSD (current assignment: breakout)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.098(417)   -0.194(273)   -0.157(183)   -0.137( 85)
+    breakout   +0.131(331)   +0.092(204)   +0.235(138)   +0.241( 67)
+    momentum   +0.059(520)   +0.112(297)   +0.184(190)   +0.225( 92)
+
+EURUSD (current assignment: momentum)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.008(282)   +0.019(180)   -0.001(124)   +0.023( 60)
+    breakout   +0.079(285)   +0.075(189)   +0.076(134)   -0.125( 76)
+    momentum   +0.048(523)   +0.062(323)   +0.044(209)   +0.097(105)
+
+US30 (current assignment: breakout)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.020(215)   +0.052(130)   +0.080( 85)   +0.023( 43)
+    breakout   +0.115(221)   +0.160(132)   +0.095( 80)   -0.009( 36)
+    momentum   -0.037(207)   -0.024(123)   -0.177( 83)   -0.035( 35)
+
+US2000 (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.050(107)   -0.050(107)   -0.201( 79)   +0.048( 35)
+    breakout   +0.015(125)   +0.015(125)   -0.143( 97)   -0.267( 54)
+    momentum   -0.131(118)   -0.131(118)   -0.137( 88)   -0.328( 48)
+
+UK100 (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.110(122)   -0.110(122)   -0.178( 95)   -0.115( 58)
+    breakout   -0.280(132)   -0.280(132)   -0.365(101)   -0.139( 59)
+    momentum   -0.156(138)   -0.156(138)   -0.335(108)   -0.169( 62)
+
+EU50 (current assignment: pullback)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   +0.161(230)   +0.152(118)   +0.115( 84)   -0.092( 45)
+    breakout   +0.122(271)   +0.056(150)   -0.023( 97)   -0.172( 41)
+    momentum   -0.004(265)   +0.028(142)   -0.138( 99)   -0.384( 45)
+
+XPTUSD (current assignment: momentum)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.077(240)   -0.077(240)   -0.070(195)   +0.116(100)
+    breakout   -0.092(233)   -0.092(233)   -0.099(191)   +0.046(108)
+    momentum   -0.090(205)   -0.090(205)   -0.125(168)   +0.219( 86)
+
+EURJPY (current assignment: momentum)
+    strategy          60mo          36mo          24mo          12mo
+    pullback   -0.011(416)   +0.123(255)   +0.066(171)   -0.097( 87)
+    breakout   +0.041(283)   +0.122(192)   -0.081(124)   -0.038( 52)
+    momentum   -0.007(447)   +0.084(277)   -0.010(174)   -0.020( 80)
+
+====================================================================================================
+ROBUST WINNER ANALYSIS (positive meanR in >=2 of available windows AND avg meanR > +0.05)
+====================================================================================================
+  XAUUSD  robust winner = momentum  CURRENT = breakout  <-- MISMATCH (avg +0.208, positive in 4/4)
+  US500   robust winner = momentum  MATCHES current (avg +0.286, positive in 4/4)
+  DE40    robust winner = momentum  MATCHES current (avg +0.162, positive in 4/4)
+  JP225   robust winner = pullback  MATCHES current (avg +0.184, positive in 4/4)
+  CHFJPY  robust=NONE (currently assigned: pullback); best pullback avg +0.048
+  US100   robust winner = momentum  MATCHES current (avg +0.248, positive in 3/4)
+  ETHUSD  robust winner = momentum  CURRENT = breakout  <-- MISMATCH (avg +0.094, positive in 4/4)
+  USOIL   robust=NONE (currently assigned: pullback) (already disabled); best pullback avg +0.017
+  XAGUSD  robust=NONE (currently assigned: pullback) (already disabled); best pullback avg +0.035
+  BTCUSD  robust=NONE (currently assigned: breakout); best breakout avg +0.001
+  UKOIL   robust=NONE (currently assigned: pullback) (already disabled); best momentum avg -0.065
+  GBPUSD  robust winner = breakout  MATCHES current (avg +0.175, positive in 4/4)
+  EURUSD  robust winner = momentum  MATCHES current (avg +0.063, positive in 4/4)
+  US30    robust winner = breakout  MATCHES current (avg +0.090, positive in 3/4)
+  US2000  robust=NONE (currently assigned: pullback) (already disabled); best pullback avg -0.063
+  UK100   robust=NONE (currently assigned: pullback); best pullback avg -0.128
+  EU50    robust winner = pullback  MATCHES current (avg +0.084, positive in 3/4)
+  XPTUSD  robust=NONE (currently assigned: momentum) (already disabled); best momentum avg -0.022
+  EURJPY  robust=NONE (currently assigned: momentum); best pullback avg +0.020
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+  Agreements (current = long-window winner): 8
+    ['US500', 'DE40', 'JP225', 'US100', 'GBPUSD', 'EURUSD', 'US30', 'EU50']
+  Mismatches (current differs from long-window winner): 2
+    XAUUSD: current=breakout, long-horizon winner=momentum (avg +0.208)
+    ETHUSD: current=breakout, long-horizon winner=momentum (avg +0.094)
+  No robust winner (current should probably stay disabled or get extra scrutiny): 9
+    ['CHFJPY', 'USOIL', 'XAGUSD', 'BTCUSD', 'UKOIL', 'US2000', 'UK100', 'XPTUSD', 'EURJPY']
+
+--- STDERR ---

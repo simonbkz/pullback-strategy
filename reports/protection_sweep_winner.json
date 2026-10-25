@@ -1,0 +1,10 @@
+{
+  "_generated": "2026-05-14T21:11:17.093978",
+  "dd_cap_pct": 70.0,
+  "base_risk_pct": 6.1,
+  "htf": "htf_off",
+  "decay": "decay_vagg",
+  "return_pct": 300696.94009249756,
+  "max_dd_pct": 65.33473815920145,
+  "trades": 696
+}

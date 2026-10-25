@@ -1,0 +1,117 @@
+{
+  "_generated": "2026-05-09T22:33:05.394091",
+  "monte_carlo_5000_runs": {
+    "winner_config": "V_NOV_dn + V_INST_DD @ 6.10% / floor=0.5 / threshold=5R",
+    "median_return_pct": 367855.5792415424,
+    "p5_return_pct": 14176.940231212347,
+    "p95_return_pct": 9547216.446672762,
+    "median_dd_pct": 58.65095516650664,
+    "p95_dd_pct": 76.68875172212769,
+    "prob_dd_over_60_pct": 44.7,
+    "prob_negative_return_pct": 0.0
+  },
+  "thompson_weights": {
+    "XAUUSD": 0.46,
+    "US500": 1.523,
+    "DE40": 1.476,
+    "JP225": 0.959,
+    "CHFJPY": 1.043,
+    "HK50": 0.878,
+    "US100": 0.994,
+    "ETHUSD": 0.449,
+    "USOIL": 0.674
+  },
+  "thompson_only_at_6.10": {
+    "return": 17914.601900903224,
+    "dd": 51.74701859272942
+  },
+  "vol_target_only_at_6.10": {
+    "return": 10496.182063722616,
+    "dd": 74.41831159933332
+  },
+  "combined_at_6.10": {
+    "return": 7842.2695891148205,
+    "dd": 53.28288082014018
+  },
+  "risk_grid": [
+    {
+      "risk": 5.5,
+      "trades": 525,
+      "return_pct": 6160.928433823047,
+      "max_dd_pct": 48.84707692064644
+    },
+    {
+      "risk": 5.7,
+      "trades": 525,
+      "return_pct": 6704.788990761402,
+      "max_dd_pct": 50.34886271990323
+    },
+    {
+      "risk": 5.9,
+      "trades": 525,
+      "return_pct": 7266.228231647028,
+      "max_dd_pct": 51.82749832375738
+    },
+    {
+      "risk": 6.0,
+      "trades": 525,
+      "return_pct": 7552.625197437318,
+      "max_dd_pct": 52.55810180150065
+    },
+    {
+      "risk": 6.1,
+      "trades": 525,
+      "return_pct": 7842.2695891148205,
+      "max_dd_pct": 53.28288082014018
+    },
+    {
+      "risk": 6.2,
+      "trades": 525,
+      "return_pct": 8134.728116371323,
+      "max_dd_pct": 54.001825794044244
+    },
+    {
+      "risk": 6.3,
+      "trades": 525,
+      "return_pct": 8429.544111609956,
+      "max_dd_pct": 54.714928359693026
+    },
+    {
+      "risk": 6.5,
+      "trades": 525,
+      "return_pct": 9024.309787380012,
+      "max_dd_pct": 56.12357866185156
+    },
+    {
+      "risk": 6.7,
+      "trades": 525,
+      "return_pct": 9622.47865456286,
+      "max_dd_pct": 57.50878764118881
+    },
+    {
+      "risk": 7.0,
+      "trades": 525,
+      "return_pct": 10516.415346842841,
+      "max_dd_pct": 59.54259356815641
+    },
+    {
+      "risk": 7.5,
+      "trades": 525,
+      "return_pct": 11957.482870201147,
+      "max_dd_pct": 62.81489729630789
+    },
+    {
+      "risk": 8.0,
+      "trades": 525,
+      "return_pct": 13268.796512796322,
+      "max_dd_pct": 65.94079712376286
+    }
+  ],
+  "feasible_winner": {
+    "risk": 7.0,
+    "trades": 525.0,
+    "return_pct": 10516.415346842841,
+    "max_dd_pct": 59.54259356815641
+  },
+  "transformer_skipped_reason": "525 trades insufficient for transformer (overfits at 9.5 params/sample). HistGradientBoosting in regime_predictor.py is the right ML tool for this size."
+}

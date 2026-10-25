@@ -1,0 +1,11 @@
+{
+  "XAUUSD": "xagg_fast",
+  "US500": "xagg",
+  "DE40": "xagg_fast",
+  "JP225": "vagg_slow",
+  "CHFJPY": "xagg",
+  "HK50": "ultra_slow",
+  "US100": "xagg_breathing",
+  "ETHUSD": "vagg",
+  "USOIL": "decay_off"
+}

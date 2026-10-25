@@ -1,0 +1,14 @@
+{
+  "_generated": "2026-05-14T21:00:36.078601",
+  "dd_cap_pct": 70.0,
+  "base_risk_pct": 7.0,
+  "stale_bars": 72,
+  "novelty_enabled": false,
+  "v_inst_dd_enabled": true,
+  "v_inst_dd_threshold_r": 5.0,
+  "v_inst_dd_scale": 0.5,
+  "novelty_floor": 0.5,
+  "return_pct": 161594.90648793473,
+  "max_dd_pct": 69.3452558903372,
+  "trades": 525
+}

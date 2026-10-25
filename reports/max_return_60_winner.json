@@ -1,0 +1,74 @@
+{
+  "_generated": "2026-05-06T13:58:00.921972",
+  "dd_cap_pct": 60.0,
+  "winner_variant": "V_NOV_dn",
+  "base_risk_pct": 5.7,
+  "novelty_floor": "0.5",
+  "test_period_return_pct": 65685.86745037122,
+  "test_period_max_dd_pct": 59.92099637494864,
+  "top_10_feasible": [
+    {
+      "variant": "V_NOV_dn",
+      "risk": 5.7,
+      "floor": 0.5,
+      "return_pct": 65685.86745037122,
+      "max_dd_pct": 59.92099637494864
+    },
+    {
+      "variant": "V_NOV_dn",
+      "risk": 5.65,
+      "floor": 0.5,
+      "return_pct": 63585.436627813746,
+      "max_dd_pct": 59.55532794602427
+    },
+    {
+      "variant": "V_NOV_dn",
+      "risk": 5.6,
+      "floor": 0.5,
+      "return_pct": 61528.586853084285,
+      "max_dd_pct": 59.187262209288015
+    },
+    {
+      "variant": "V0",
+      "risk": 5.16,
+      "floor": "-",
+      "return_pct": 61418.99753515085,
+      "max_dd_pct": 59.919918075151
+    },
+    {
+      "variant": "V0",
+      "risk": 5.14,
+      "floor": "-",
+      "return_pct": 60524.144597287624,
+      "max_dd_pct": 59.75821425283947
+    },
+    {
+      "variant": "V0",
+      "risk": 5.12,
+      "floor": "-",
+      "return_pct": 59638.09554396836,
+      "max_dd_pct": 59.59604507197008
+    },
+    {
+      "variant": "V_NOV_dn",
+      "risk": 5.55,
+      "floor": 0.5,
+      "return_pct": 59515.429160966065,
+      "max_dd_pct": 58.81678838505425
+    },
+    {
+      "variant": "V0",
+      "risk": 5.1,
+      "floor": "-",
+      "return_pct": 58760.844589625616,
+      "max_dd_pct": 59.43340962214694
+    },
+    {
+      "variant": "V_NOV_dn",
+      "risk": 5.5,
+      "floor": 0.5,
+      "return_pct": 57546.02228466726,
+      "max_dd_pct": 58.44389566401467
+    }
+  ]
+}

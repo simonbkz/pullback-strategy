@@ -1,0 +1,27 @@
+{
+  "threshold": 0.2628244432311667,
+  "trained_at": "2026-10-03",
+  "n_train": 329,
+  "baseline_meanR": -0.125966272381155,
+  "features": [
+    "ret_1",
+    "ret_5",
+    "ret_20",
+    "ret_60",
+    "log_ret_20",
+    "dist_ema20",
+    "dist_ema50",
+    "dist_ema200",
+    "ema_cross_50_200",
+    "ema_cross_20_50",
+    "atr_norm",
+    "range_rel",
+    "rsi",
+    "rsi_prev",
+    "pct_range_20",
+    "hour_sin",
+    "hour_cos",
+    "dow",
+    "h4_trend"
+  ]
+}

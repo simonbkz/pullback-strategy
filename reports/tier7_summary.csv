@@ -1,0 +1,4 @@
+mode,trades_taken,win_rate_pct,avg_R,worst_R,longest_loss_streak,peak_equity,trough_equity,end_equity,return_pct,max_dd_pct,blew_up,first_blow_ts
+market,421,38.5,0.303,-1.1,11,8147351.49,8707.07,4716042.81,47060.4,70.9,False,
+limit_ema,250,36.0,0.216,-1.1,10,322055.85,7450.64,89265.81,792.7,79.7,False,
+limit_ema_noconf,328,35.4,0.202,-1.09,9,298525.13,8024.27,125115.83,1151.2,85.7,False,

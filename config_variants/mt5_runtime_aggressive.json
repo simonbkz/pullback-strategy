@@ -1,0 +1,350 @@
+{
+  "_comment": "AGGRESSIVE V_BASE winner config — DD<60% target, +65k% backtest return. NEW novelty + stale_exit flags default DISABLED. Do NOT switch to this config until you have followed LIVE_DEPLOYMENT_NOTES.md phased rollout. Use with: python live_trader.py --config mt5_runtime_aggressive.json",
+  "_winner_params": "V_NOV_dn @ stale=72, base_risk=5.70%, novelty floor=0.5, downscale_only mode. Per-asset BE configs for 9-instrument basket (HK50 unavailable on HFM).",
+  "connection": {
+    "_comment": "Same MT5 binding as the conservative config. expected_login MUST match your account.",
+    "path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
+    "expected_server": "HFM",
+    "expected_login": "<YOUR_MT5_LOGIN>"
+  },
+  "instruments": [
+    "XAUUSD",
+    "US500",
+    "DE40",
+    "JP225",
+    "CHFJPY",
+    "US100",
+    "ETHUSD",
+    "USOIL"
+  ],
+  "symbol_map": {
+    "XAUUSD": [
+      "XAUUSDr",
+      "XAUUSD"
+    ],
+    "US500": [
+      "USA500",
+      "US500.F",
+      "US500"
+    ],
+    "DE40": [
+      "GER40",
+      "GER40.F"
+    ],
+    "JP225": [
+      "JPN225",
+      "JP225.F"
+    ],
+    "CHFJPY": [
+      "CHFJPY",
+      "CHFJPYr"
+    ],
+    "US100": [
+      "USA100",
+      "US100.F",
+      "US100"
+    ],
+    "ETHUSD": [
+      "#ETHUSDr"
+    ],
+    "USOIL": [
+      "USOIL",
+      "USOIL.S"
+    ]
+  },
+  "tier": {
+    "_comment": "AGGRESSIVE: base 5.70% (was 2.0%). use_regime/use_predicted_regime/use_equity_throttle all OFF — V_BASE backtest applied risk = base * novelty_multiplier ONLY. Enabling regime/equity composes multiplicatively and was untested at this base level — leave OFF until validated.",
+    "name": "v_combo_winner",
+    "_winner_note": "Updated 2026-05-08: V_NOV_dn @ 6.10% + per_inst_dd_throttle scale=0.5 threshold=5R. Backtest +67,872% / 59.35% DD (was +65,907% / 59.92% under V_NOV_dn 5.70 alone).",
+    "base_risk_pct": 6.1,
+    "use_regime": false,
+    "use_predicted_regime": false,
+    "chop_skip": false,
+    "chop_reduce_factor": 0.4,
+    "use_equity_throttle": false
+  },
+  "tier_overrides": {
+    "_comment": "Per-instrument: delay_sl_bars from Phase 11. emergency_mult overrides cap disaster-SL exposure on tail-prone instruments (added 2026-05-08).",
+    "XAUUSD": {
+      "delay_sl_bars": 4,
+      "emergency_mult": 1.5,
+      "risk_pct_override": 3.05
+    },
+    "CHFJPY": {
+      "delay_sl_bars": 12
+    },
+    "DE40": {
+      "delay_sl_bars": 6
+    },
+    "US500": {
+      "delay_sl_bars": 12
+    },
+    "JP225": {
+      "delay_sl_bars": 4
+    },
+    "HK50": {
+      "delay_sl_bars": 4
+    },
+    "US100": {
+      "delay_sl_bars": 2
+    },
+    "ETHUSD": {
+      "delay_sl_bars": 24,
+      "emergency_mult": 2.0,
+      "risk_pct_override": 4.88
+    },
+    "USOIL": {
+      "delay_sl_bars": 24
+    }
+  },
+  "delayed_sl": {
+    "_comment": "Same disaster-SL config as conservative. emergency_mult=3.0 caps tail at 3R during delay window.",
+    "enabled": true,
+    "emergency_mult": 3.0,
+    "default_delay_bars": 6
+  },
+  "tp_safety_net": {
+    "enabled": true,
+    "near_tp_buffer_R": 0.05,
+    "recent_bars_to_check": 3,
+    "min_age_seconds": 60
+  },
+  "be_trail": {
+    "_comment": "Per-asset BE-trail configs from the latest 2026-05-05 sweep. CHANGED vs conservative: ETHUSD 0.75->0.5, USOIL 1.5->2.0. JP225 + CHFJPY remain inactive (baseline beat all BE variants for these).",
+    "enabled": true,
+    "default_trigger_R": 1.0,
+    "default_offset_R": 0.1,
+    "per_instrument": {
+      "XAUUSD": {
+        "be_trigger_R": 0.5,
+        "be_offset_R": 0.1,
+        "active": true
+      },
+      "US500": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.1,
+        "active": true
+      },
+      "DE40": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.1,
+        "active": true
+      },
+      "JP225": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.0,
+        "active": false
+      },
+      "CHFJPY": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.0,
+        "active": false
+      },
+      "HK50": {
+        "be_trigger_R": 1.5,
+        "be_offset_R": 0.1,
+        "active": true
+      },
+      "US100": {
+        "be_trigger_R": 0.5,
+        "be_offset_R": 0.1,
+        "active": true
+      },
+      "ETHUSD": {
+        "be_trigger_R": 0.5,
+        "be_offset_R": 0.1,
+        "active": true
+      },
+      "USOIL": {
+        "be_trigger_R": 2.0,
+        "be_offset_R": 0.1,
+        "active": true
+      }
+    }
+  },
+  "adaptive_sl": {
+    "enabled": false,
+    "default_tighten_atr": 0.5,
+    "default_dwell": 2,
+    "per_instrument": {
+      "XAUUSD": {
+        "tighten_atr": 0.5,
+        "dwell": 1,
+        "active": true
+      },
+      "US500": {
+        "tighten_atr": 0.5,
+        "dwell": 1,
+        "active": false
+      },
+      "DE40": {
+        "tighten_atr": 0.5,
+        "dwell": 3,
+        "active": true
+      },
+      "JP225": {
+        "tighten_atr": 0.75,
+        "dwell": 2,
+        "active": false
+      },
+      "CHFJPY": {
+        "tighten_atr": 0.3,
+        "dwell": 1,
+        "active": true
+      },
+      "HK50": {
+        "tighten_atr": 0.75,
+        "dwell": 3,
+        "active": true
+      },
+      "US100": {
+        "tighten_atr": 0.5,
+        "dwell": 1,
+        "active": true
+      },
+      "ETHUSD": {
+        "tighten_atr": 1.0,
+        "dwell": 3,
+        "active": true
+      },
+      "USOIL": {
+        "tighten_atr": 1.0,
+        "dwell": 3,
+        "active": true
+      }
+    }
+  },
+  "novelty": {
+    "_comment": "Mahalanobis novelty multiplier — ENABLED for max-return V_BASE config. Mode 'downscale_only' = familiar bars get full risk, novel bars get scaled down to floor (0.5 = halve risk on bars beyond p95 Mahalanobis distance from train centroid). Re-fit baselines weekly via: python save_novelty_baselines.py",
+    "enabled": true,
+    "baselines_path": "novelty_baselines.json",
+    "mode": "downscale_only",
+    "floor": 0.5,
+    "ceiling": 1.5
+  },
+  "stale_exit": {
+    "_comment": "Force-close trades that haven't reached progress_R within stale_bars H1 bars and aren't yet BE-armed.",
+    "enabled": true,
+    "stale_bars": 72,
+    "progress_R": 0.75
+  },
+  "per_inst_dd_throttle": {
+    "_comment": "V_INST_DD: halve risk on instruments whose cumulative R drawdown (from journal r_multiple_gross) >= threshold_r. Backtest 2026-05-08: combining with V_NOV_dn @ 6.10% gives +67,872% / 59.35% DD vs 65,907% / 59.92% without. Best feasible under DD<60%.",
+    "enabled": true,
+    "threshold_r": 5.0,
+    "scale": 0.5
+  },
+  "execution": {
+    "_comment": "max_concurrent_positions bumped 5->9 to match V_BASE basket (one slot per instrument). max_spread_pips overrides unchanged from conservative config.",
+    "entry_mode": "market",
+    "max_concurrent_positions": 9,
+    "max_spread_pips_default": 5.0,
+    "max_spread_pips_overrides": {
+      "XAUUSD": 50.0,
+      "US500": 50.0,
+      "US100": 120.0,
+      "DE40": 150.0,
+      "JP225": 300.0,
+      "CHFJPY": 30.0,
+      "HK50": 250.0,
+      "USOIL": 50.0,
+      "ETHUSD": 200.0
+    },
+    "max_risk_overshoot_mult": 1.5,
+    "max_worst_case_mult": 4.0,
+    "portfolio_heat_cap_pct": 17.1,
+    "_portfolio_heat_note": "Aggressive: 3x base risk = 17.1% heat cap. Allows ~3 simultaneous positions before blocking new entries.",
+    "magic_number": 20260506,
+    "comment": "fx-edge v_base"
+  },
+  "regime_predictor": {
+    "_comment": "Inactive when use_regime=false in tier, but kept loaded so we can flip the flag without restarting.",
+    "train_window": 2000,
+    "refit_every": 200,
+    "refit_every_hours": 24.0,
+    "lookahead": 12,
+    "warmup_bars": 2200
+  },
+  "entry_blackout": {
+    "enabled": true,
+    "per_instrument": {
+      "XAUUSD": [
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  "news_blackout": {
+    "enabled": true,
+    "windows": [
+      {
+        "name": "NFP",
+        "weekday": 4,
+        "ordinal": 1,
+        "utc_start": "13:25",
+        "utc_end": "14:30"
+      },
+      {
+        "name": "US_CPI",
+        "weekday": 1,
+        "ordinal": 2,
+        "utc_start": "13:25",
+        "utc_end": "13:45"
+      },
+      {
+        "name": "US_CPI_w",
+        "weekday": 2,
+        "ordinal": 2,
+        "utc_start": "13:25",
+        "utc_end": "13:45"
+      },
+      {
+        "name": "ECB",
+        "weekday": 3,
+        "utc_start": "12:10",
+        "utc_end": "13:30"
+      },
+      {
+        "name": "BOE",
+        "weekday": 3,
+        "utc_start": "11:55",
+        "utc_end": "12:30"
+      },
+      {
+        "name": "FOMC_2026_06_18",
+        "dates": [
+          "2026-06-18"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30"
+      },
+      {
+        "name": "FOMC_2026_07_30",
+        "dates": [
+          "2026-07-30"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30"
+      }
+    ]
+  },
+  "auto_enable_thresholds": {
+    "thompson_sampling": {
+      "min_trades_per_instrument": 30
+    },
+    "ml_edge_filter": {
+      "min_total_trades": 1000
+    },
+    "transformer_filter": {
+      "min_total_trades": 10000
+    },
+    "counterfactual_filter_calibration": {
+      "min_skipped_signals_per_filter": 100
+    }
+  },
+  "polling": {
+    "tick_interval_seconds": 30,
+    "log_heartbeat_minutes": 15
+  }
+}

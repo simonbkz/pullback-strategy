@@ -1,0 +1,46 @@
+# --- environment / caches -------------------------------------------------
+.venv/
+__pycache__/
+*.pyc
+.claude/
+=
+
+# --- live state, journal, logs (never commit) -----------------------------
+trade_journal.db
+trade_journal.db.*
+*.log
+*.err
+runtime_state.json
+monitor_state.json
+monitor_status.json
+regime_pulse.json
+.last_walk_forward.txt
+_p2_validated.json
+_r2_recs.json
+_r3_recs.json
+logs/
+backups/
+_archive/
+
+# --- code / config backups made before each change -------------------------
+*.bak
+*.bak_*
+
+# --- market data (large, re-fetchable with mt5_history_fetch.py / EODHD) ---
+data/
+data_eodhd/
+data_mt5/
+
+# --- live config: contains the account number and the monitor webhook ------
+# A sanitised copy is committed as mt5_runtime.example.json; the historical
+# sweep winners are committed sanitised under config_variants/.
+/mt5_runtime.json
+/mt5_runtime_*.json
+/mt5_runtime_prev.json.bak
+
+# --- daily / weekly generated reports (operational, account-specific) -------
+reports/agent_audit/
+reports/signal_path/
+reports/regime_pulse/
+reports/broader_wf/
+reports/agent_audit/scratch/

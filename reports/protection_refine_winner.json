@@ -1,0 +1,10 @@
+{
+  "_generated": "2026-05-14T21:13:20.028992",
+  "dd_cap_pct": 70.0,
+  "base_risk_pct": 7.0,
+  "decay_variant": "xagg_fast",
+  "stale_bars": 72,
+  "return_pct": 6291223.577559909,
+  "max_dd_pct": 69.41148839234889,
+  "trades": 744
+}

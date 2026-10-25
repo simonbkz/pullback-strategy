@@ -1,0 +1,98 @@
+{
+  "BTCUSD": {
+    "atr_stop_mult": 2.0,
+    "pullback_ema": 15,
+    "rr_target": 3.0,
+    "swing_lookback": 20
+  },
+  "CHFJPY": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 30,
+    "rr_target": 1.5,
+    "swing_lookback": 25
+  },
+  "DE40": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 15,
+    "rr_target": 2.0,
+    "swing_lookback": 15
+  },
+  "ETHUSD": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 15,
+    "rr_target": 3.0,
+    "swing_lookback": 15
+  },
+  "EURJPY": {
+    "atr_stop_mult": 1.0,
+    "pullback_ema": 30,
+    "rr_target": 2.0,
+    "swing_lookback": 15
+  },
+  "GBPUSD": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 20,
+    "rr_target": 3.0,
+    "swing_lookback": 25
+  },
+  "HK50": {
+    "atr_stop_mult": 2.0,
+    "pullback_ema": 20,
+    "rr_target": 3.0,
+    "swing_lookback": 25
+  },
+  "JP225": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 15,
+    "rr_target": 2.0,
+    "swing_lookback": 25
+  },
+  "SOLUSD": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 15,
+    "rr_target": 2.5,
+    "swing_lookback": 25
+  },
+  "UK100": {
+    "atr_stop_mult": 1.0,
+    "pullback_ema": 20,
+    "rr_target": 1.5,
+    "swing_lookback": 15
+  },
+  "US100": {
+    "atr_stop_mult": 2.0,
+    "pullback_ema": 30,
+    "rr_target": 3.0,
+    "swing_lookback": 15
+  },
+  "US30": {
+    "atr_stop_mult": 2.0,
+    "pullback_ema": 15,
+    "rr_target": 2.5,
+    "swing_lookback": 20
+  },
+  "US500": {
+    "atr_stop_mult": 1.0,
+    "pullback_ema": 20,
+    "rr_target": 3.0,
+    "swing_lookback": 20
+  },
+  "USOIL": {
+    "atr_stop_mult": 1.5,
+    "pullback_ema": 30,
+    "rr_target": 2.0,
+    "swing_lookback": 15
+  },
+  "XAUUSD": {
+    "atr_stop_mult": 2.0,
+    "pullback_ema": 15,
+    "rr_target": 3.0,
+    "swing_lookback": 25
+  },
+  "XRPUSD": {
+    "atr_stop_mult": 2.0,
+    "pullback_ema": 20,
+    "rr_target": 3.0,
+    "swing_lookback": 25
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "_generated": "2026-05-08T22:45:39.380928",
+  "dd_cap_pct": 60.0,
+  "winner_risk": 6.1,
+  "winner_inst_dd_scale": 0.5,
+  "test_period_return_pct": 67872.61986632094,
+  "test_period_max_dd_pct": 59.354718934479436,
+  "previous_winner_return_pct": 65907.03,
+  "improvement_pp": 1965.5898663209373
+}

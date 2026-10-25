@@ -1,0 +1,134 @@
+{
+  "_generated": "2026-05-05T23:08:03.881345",
+  "winner_variant": "V0_baseline",
+  "base_risk_pct": 4.0,
+  "test_period_return_pct": 23277.009563612115,
+  "test_period_max_dd_pct": 49.74331170045259,
+  "test_period_trades": 521,
+  "indices_basket": [
+    "XAUUSD",
+    "US500",
+    "DE40",
+    "JP225",
+    "CHFJPY",
+    "HK50",
+    "US100",
+    "ETHUSD",
+    "USOIL"
+  ],
+  "indices_be_configs": {
+    "XAUUSD": [
+      0.5,
+      0.1
+    ],
+    "US500": [
+      1.0,
+      0.1
+    ],
+    "DE40": [
+      1.0,
+      0.1
+    ],
+    "JP225": null,
+    "CHFJPY": null,
+    "HK50": [
+      1.5,
+      0.1
+    ],
+    "US100": [
+      0.5,
+      0.1
+    ],
+    "ETHUSD": [
+      0.5,
+      0.1
+    ],
+    "USOIL": [
+      2.0,
+      0.1
+    ]
+  },
+  "indices_delay_bars": {
+    "XAUUSD": 8,
+    "US500": 12,
+    "DE40": 6,
+    "JP225": 4,
+    "CHFJPY": 12,
+    "HK50": 4,
+    "US100": 2,
+    "ETHUSD": 24,
+    "USOIL": 24
+  },
+  "available_fx_basket": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "USDCHF",
+    "AUDUSD",
+    "NZDUSD",
+    "USDCAD"
+  ],
+  "fx_be_configs": {
+    "EURUSD": [
+      0.75,
+      0.1
+    ],
+    "GBPUSD": [
+      1.0,
+      0.1
+    ],
+    "USDJPY": [
+      2.0,
+      0.0
+    ],
+    "USDCHF": [
+      1.0,
+      0.0
+    ],
+    "AUDUSD": [
+      0.75,
+      0.1
+    ],
+    "NZDUSD": [
+      0.5,
+      0.0
+    ],
+    "USDCAD": [
+      2.0,
+      0.1
+    ]
+  },
+  "fx_delay_bars_default": 8,
+  "best_stale_bars": null,
+  "weights_9_inst": {
+    "XAUUSD": 0.0318,
+    "US500": 4.1133,
+    "DE40": 3.1927,
+    "JP225": 0.0864,
+    "CHFJPY": 0.1893,
+    "HK50": 0.2224,
+    "US100": 1.0315,
+    "ETHUSD": 0.0161,
+    "USOIL": 0.1165
+  },
+  "weights_16_inst": {
+    "XAUUSD": 0.0342,
+    "US500": 4.4264,
+    "DE40": 3.4357,
+    "JP225": 0.093,
+    "CHFJPY": 0.2037,
+    "HK50": 0.2393,
+    "US100": 1.11,
+    "ETHUSD": 0.0173,
+    "USOIL": 0.1254,
+    "EURUSD": 0.1787,
+    "GBPUSD": 2.916,
+    "USDJPY": 0.4411,
+    "USDCHF": 1.6133,
+    "AUDUSD": 0.3031,
+    "NZDUSD": 0.0941,
+    "USDCAD": 0.7685
+  },
+  "corr_threshold": 0.7,
+  "max_per_corr_group": 1
+}

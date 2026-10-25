@@ -1,0 +1,19 @@
+{
+  "_generated": "2026-05-06T14:20:45.373523",
+  "dd_cap_pct": 60.0,
+  "winner_variant": "V_BASE",
+  "base_risk_pct": 5.7,
+  "test_period_return_pct": 65907.02572126548,
+  "test_period_max_dd_pct": 59.92099637495173,
+  "test_period_trades": 525,
+  "improvements_tested": {
+    "V_INST_DD": "halve risk after instrument cumulative DD-R >= 5.0R",
+    "V_COOLDOWN": "skip new entries on instrument for 24 hours after disaster_sl exit",
+    "V_FEATX": "expanded novelty features (multi-period EMA distance, longer-horizon vol, multi-ATR ratios)",
+    "V_COMP_CAP": "freeze position sizing at 2x initial equity"
+  },
+  "skipped": {
+    "#3 walk-forward refit": "tested in regime_risk_60.py \u2014 failed (DD>60% across all variants)",
+    "#6 spread gate": "live-only \u2014 backtest spread is fixed"
+  }
+}

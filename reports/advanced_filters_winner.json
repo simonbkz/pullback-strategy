@@ -1,0 +1,16 @@
+{
+  "label": "Chandelier_2R",
+  "raw_sig": 6586,
+  "kept_sig": 6586,
+  "kept_pct": 100.0,
+  "n": 711,
+  "win_rate": 43.741209563994374,
+  "mean_win": 1.7253106242405332,
+  "mean_loss": -0.5834661825126456,
+  "expectancy_R": 0.42642071889415983,
+  "profit_factor": 2.29906899585897,
+  "pays_for_n": 2.9570019239343663,
+  "return_pct": 50343944.89581792,
+  "max_dd_pct": 64.73601282961096,
+  "trades_taken": 711
+}

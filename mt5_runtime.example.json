@@ -1,0 +1,2356 @@
+{
+  "_comment": "DEFAULT runtime config (2026-05-14). Final per-asset-decay winner with full institutional protection stack: per-instrument decay schedules, DD circuit breaker, profit ratchet, V_INST_DD throttle. Backtest +19,883,573% / 69.20% DD idealized; +8,826,971% / 69.57% DD at realistic 1.5x slippage haircut. Walk-forward CV confirmed robust (3/3 windows). Used by: python live_trader.py (no --config flag).",
+  "_winner_params": "risk=6.90%, per-instrument decay_sl, V_INST_DD=ON, dd_circuit_breaker=ON (40% throttle / 60% pause), profit_ratchet=ON (bank 50% above 2x start).",
+  "_safer_alternative": "To halve all leverage, set tier.base_risk_pct=3.45. Backtest at 5.50% gives +3.8M% / 58.8% DD (15% DD buffer).",
+  "connection": {
+    "path": "C:\\Program Files\\MetaTrader 5\\terminal64.exe",
+    "expected_server": "HFM",
+    "expected_login": "<YOUR_MT5_LOGIN>"
+  },
+  "instruments": [
+    "XAUUSD",
+    "US500",
+    "DE40",
+    "JP225",
+    "CHFJPY",
+    "US100",
+    "ETHUSD",
+    "USOIL",
+    "XAGUSD",
+    "BTCUSD",
+    "UKOIL",
+    "GBPUSD",
+    "EURUSD",
+    "US30",
+    "US2000",
+    "UK100",
+    "EU50",
+    "XPTUSD",
+    "EURJPY",
+    "USDCAD",
+    "USDJPY",
+    "AUDUSD",
+    "CADJPY",
+    "NZDJPY",
+    "USDCHF",
+    "NZDUSD",
+    "GBPJPY",
+    "AUDJPY",
+    "LTCUSD",
+    "XRPUSD",
+    "ADAUSD",
+    "SOLUSD",
+    "DOTUSD",
+    "AUS200",
+    "FRA40"
+  ],
+  "symbol_map": {
+    "XAUUSD": [
+      "XAUUSDr",
+      "XAUUSD"
+    ],
+    "US500": [
+      "USA500",
+      "US500.F",
+      "US500"
+    ],
+    "DE40": [
+      "GER40",
+      "GER40.F"
+    ],
+    "JP225": [
+      "JPN225",
+      "JP225.F"
+    ],
+    "CHFJPY": [
+      "CHFJPY",
+      "CHFJPYr"
+    ],
+    "US100": [
+      "USA100",
+      "US100.F",
+      "US100"
+    ],
+    "ETHUSD": [
+      "#ETHUSDr"
+    ],
+    "USOIL": [
+      "USOIL",
+      "USOIL.S"
+    ],
+    "XAGUSD": [
+      "XAGUSDr",
+      "XAGUSD",
+      "SILVER"
+    ],
+    "BTCUSD": [
+      "#BTCUSDr",
+      "BTCUSDr",
+      "BTCUSD",
+      "BTC/USD"
+    ],
+    "UKOIL": [
+      "UKOIL",
+      "UKOIL.cash",
+      "BRENT"
+    ],
+    "COPPER": [
+      "COPPER",
+      "HG.cash",
+      "COPPER.cash"
+    ],
+    "GBPUSD": [
+      "GBPUSD",
+      "GBPUSDr"
+    ],
+    "EURUSD": [
+      "EURUSD",
+      "EURUSDr"
+    ],
+    "US30": [
+      "USA30",
+      "US30",
+      "US30.cash"
+    ],
+    "US2000": [
+      "USA2000",
+      "US2000"
+    ],
+    "UK100": [
+      "UK100",
+      "FTSE100",
+      "UK100.cash"
+    ],
+    "EU50": [
+      "EU50",
+      "EUSTX50",
+      "STOXX50"
+    ],
+    "XPTUSD": [
+      "XPTUSD",
+      "PLATIN",
+      "PLATINUM"
+    ],
+    "EURJPY": [
+      "EURJPY",
+      "EURJPYr"
+    ],
+    "USDCAD": [
+      "USDCAD",
+      "USDCADr"
+    ],
+    "USDJPY": [
+      "USDJPY",
+      "USDJPYr"
+    ],
+    "AUDUSD": [
+      "AUDUSD",
+      "AUDUSDr"
+    ],
+    "CADJPY": [
+      "CADJPY",
+      "CADJPYr"
+    ],
+    "NZDJPY": [
+      "NZDJPY",
+      "NZDJPYr"
+    ],
+    "USDCHF": [
+      "USDCHF",
+      "USDCHFr"
+    ],
+    "NZDUSD": [
+      "NZDUSD",
+      "NZDUSDr"
+    ],
+    "GBPJPY": [
+      "GBPJPY",
+      "GBPJPYr"
+    ],
+    "AUDJPY": [
+      "AUDJPY",
+      "AUDJPYr"
+    ],
+    "LTCUSD": [
+      "#LTCUSDr",
+      "LTCUSD"
+    ],
+    "XRPUSD": [
+      "#XRPUSDr",
+      "XRPUSD"
+    ],
+    "ADAUSD": [
+      "#ADAUSDr",
+      "ADAUSD"
+    ],
+    "SOLUSD": [
+      "#SOLUSDr",
+      "SOLUSD"
+    ],
+    "DOTUSD": [
+      "#DOTUSDr",
+      "DOTUSD"
+    ],
+    "AUS200": [
+      "AUS200"
+    ],
+    "FRA40": [
+      "FRA40"
+    ]
+  },
+  "tier": {
+    "_comment": "GROWTH-MODE: 12% base with adaptive throttle stack. Effective risk during current negative regime: 12% * 0.5 = 6% (similar to old config). When regime turns positive: 12% * 1.5 = 18% (true growth mode). Throttle stack manages downside automatically.",
+    "name": "protection_winner_per_asset",
+    "_winner_note": "GROWTH MODE 2026-06-02: base_risk_pct=12% (up from 6.5%) -- aggressive target 1000% in 2-3 months IF strategy returns to backtest expectancy. Throttles (portfolio_regime, inst_expectancy, dd_circuit_breaker) act as dynamic governor: 50% cut when meanR<-0.2, full pause when meanR<-0.5. Boost to 1.5x when meanR>0.4.",
+    "base_risk_pct": 2.0,
+    "_prev_base_risk_pct_6pct_until_2026-10-20": 6.0,
+    "_risk_cut_note": "2026-10-20: 6.0 -> 2.0. Replay of actual 97-trade 90d sequence (meanR -0.033R): at 6% maxDD=59.2% final=0.647x; at 2% maxDD=24.2% final=0.913x. Live edge ~0R, so expected return unchanged; variance cut 3x. Backtest that justified 6% returned +19.88M%/6yr = not credible.",
+    "use_regime": false,
+    "use_predicted_regime": false,
+    "chop_skip": false,
+    "chop_reduce_factor": 0.4,
+    "use_equity_throttle": false,
+    "_pre_survival_base_risk_pct": 12.0,
+    "_survival_note": "SURVIVAL MODE 2026-07-02: dropped 12->7 after 95-trade live expectancy test showed portfolio meanR=-0.148. 7% is proven grand-sweep-winner rate. Growth mode reserved for after strategy shows positive live edge (portfolio meanR>0 over 20+ trades) again.",
+    "_final_note": "FINAL PASS 2026-07-05: dropped 7.0 -> 4 alongside H4 TZ bug fix in live_mt5_connector.py. At 4% risk each -1R loss = -4% equity. Combined with max_conc=3 and correlation_skip, effective portfolio-DD-per-trade is well-bounded during recovery.",
+    "_risk_step_note": "RISK STEP 2026-09-03: 4.0 -> 5.0. Live meanR +0.134R over 30 trades since 8/16 (post-ensemble). Cautious step in proven grand-sweep-winner range (6.9%). Each -1R loss now 5% equity (was 4%). Reversible if DD spikes.",
+    "_risk_step_note_2": "RISK STEP 2 (2026-09-12): 5.0 -> 6.0. Post-deposit at $4848 equity. Live meanR +0.188R over 41 trades (near backtest +0.205R). Halfway to proven grand-sweep-winner 6.9% -- one more step reserved for after 20+ more trades confirm. At 6%, per-trade $ risk = $291."
+  },
+  "tier_overrides": {
+    "_comment": "Per-instrument delay_sl_bars + emergency_mult. Risk overrides REMOVED to match backtest uniform-risk assumption.",
+    "CADJPY": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-09T00:00:00+00:00",
+      "_promoted_strategy": "momentum",
+      "_note": "Nano-shadow test. BT 12mo meanR=+0.267R / 76 trades on momentum, but longer-horizon negative (-0.048R avg). Enabled at 0.1x base_risk (0.6%) for data collection. Promote via broader_walk_forward if 10 live trades show meanR >= 0.05R."
+    },
+    "NZDJPY": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-09T00:00:00+00:00",
+      "_promoted_strategy": "breakout",
+      "_note": "Nano-shadow test. BT 12mo meanR=+0.128R / 57 trades on breakout, but longer-horizon negative (-0.074R avg). Enabled at 0.1x base_risk (0.6%) for data collection."
+    },
+    "UK100": {
+      "_prev_atr_stop_mult": 4.0,
+      "_reverted_2026-10-22": "The 4.0x widening (Oct 13) was a misdiagnosis: the 10016 rejections were caused by SL/TP rounded to digits=2 while UK100's trade_tick_size is 0.1 (every rejected order off-grid, every fill on-grid). Fixed in live_mt5_connector.round_to_tick. UK100 now uses the global atr_stop_mult (2.0) like every other instrument, restoring backtest SL geometry.",
+      "_prev_note": "Widened SL multiplier 2.0 -> 4.0 on 2026-10-13 after 4 broker rejections (retcode 10016 invalid stops) in 7 days. SL distances 32-57 pts were below broker's stops_level + spread for UK100 CFD."
+    },
+    "USDCHF": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 — complete G7 majors coverage. 12mo BT momentum +0.030R / n=87 (not stat-significant). CF data collection."
+    },
+    "NZDUSD": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 — complete G7 majors coverage. 12mo BT breakout -0.028R / n=85."
+    },
+    "GBPJPY": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 — high-liquidity JPY cross. CF data collection."
+    },
+    "AUDJPY": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 — JPY cross coverage. 12mo BT momentum +0.052R."
+    },
+    "LTCUSD": {
+      "enabled": false,
+      "_disabled_at": "2026-10-20",
+      "_disable_reason": "Alt-crypto batch: XRPUSD+SOLUSD -1.37R on first 4 trades; 5 correlated coins concentrate exposure in the asset class behind all 90d outlier losses",
+      "base_risk_pct": 0.3,
+      "_shadow_risk_scale": 0.05,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 at 0.05x (crypto gap-slip risk). No BT data; pure CF accumulation."
+    },
+    "XRPUSD": {
+      "enabled": false,
+      "_disabled_at": "2026-10-20",
+      "_disable_reason": "Alt-crypto batch disabled 2026-10-20 (see LTCUSD)",
+      "base_risk_pct": 0.3,
+      "_shadow_risk_scale": 0.05,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 at 0.05x."
+    },
+    "ADAUSD": {
+      "enabled": false,
+      "_disabled_at": "2026-10-20",
+      "_disable_reason": "Alt-crypto batch disabled 2026-10-20 (see LTCUSD)",
+      "base_risk_pct": 0.3,
+      "_shadow_risk_scale": 0.05,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 at 0.05x."
+    },
+    "SOLUSD": {
+      "enabled": false,
+      "_disabled_at": "2026-10-20",
+      "_disable_reason": "Alt-crypto batch disabled 2026-10-20 (see LTCUSD)",
+      "base_risk_pct": 0.3,
+      "_shadow_risk_scale": 0.05,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 at 0.05x."
+    },
+    "DOTUSD": {
+      "enabled": false,
+      "_disabled_at": "2026-10-20",
+      "_disable_reason": "Alt-crypto batch disabled 2026-10-20 (see LTCUSD)",
+      "base_risk_pct": 0.3,
+      "_shadow_risk_scale": 0.05,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 at 0.05x."
+    },
+    "AUS200": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 — Asia-Pacific index diversification."
+    },
+    "FRA40": {
+      "enabled": true,
+      "base_risk_pct": 0.2,
+      "_shadow_risk_scale": 0.1,
+      "_promoted_at": "2026-10-18T00:00:00+00:00",
+      "_note": "Nano-shadow 2026-10-18 — European index diversification."
+    },
+    "XAUUSD": {
+      "delay_sl_bars": 8,
+      "emergency_mult": 1.5
+    },
+    "CHFJPY": {
+      "delay_sl_bars": 12
+    },
+    "DE40": {
+      "enabled": true,
+      "_prev_enabled": false,
+      "_reenable_note": "RE-ENABLED 2026-10-01 as MOMENTUM strategy after 6yr backtest showed momentum avg +0.162R across 4/4 windows (vs pullback -0.001R to -0.060R and breakout mixed). Previous disable was based on pullback being wrong strategy for DE40. Momentum was never tried live."
+    },
+    "US500": {
+      "delay_sl_bars": 12
+    },
+    "JP225": {
+      "delay_sl_bars": 4
+    },
+    "US100": {
+      "delay_sl_bars": 2
+    },
+    "ETHUSD": {
+      "delay_sl_bars": 24,
+      "emergency_mult": 2.0
+    },
+    "USOIL": {
+      "enabled": true,
+      "base_risk_pct": 1.0,
+      "_reenabled_at": "2026-10-21",
+      "_reenable_reason": "Oct-1 disable cited live -0.25R computed on the broken journal (lost-closes bug hid 2x +2.3R tp_safety wins). Reconciled: +0.30R over 14 trades (p=0.20). Re-enabled at 0.5x (1.0%); graduate to 2.0 when live p<=0.10.",
+      "_prev_disable_reason": "No robust BT winner (best 6yr avg +0.017R); live -0.25R meanR",
+      "_disabled_at": "2026-10-01"
+    },
+    "XAGUSD": {
+      "enabled": false,
+      "_prev_enabled": null,
+      "_disable_reason": "No robust BT winner (best 6yr avg +0.035R); live -0.34R meanR",
+      "_disabled_at": "2026-10-01"
+    },
+    "BTCUSD": {
+      "enabled": true,
+      "_ml_rescued_at": "2026-10-03",
+      "_note": "Re-enabled with ML-rescue filter; baseline fails, ML selects profitable subset"
+    },
+    "UKOIL": {
+      "enabled": false,
+      "_prev_enabled": null,
+      "_disable_reason": "No robust BT winner (best 6yr avg -0.065R momentum)",
+      "_disabled_at": "2026-10-01"
+    },
+    "US2000": {
+      "enabled": false,
+      "_prev_enabled": null,
+      "_disable_reason": "Not available on HFM broker (symbol fails to resolve)",
+      "_disabled_at": "2026-10-01"
+    },
+    "EU50": {
+      "enabled": false,
+      "_prev_enabled": null,
+      "_disable_reason": "Not available on HFM broker",
+      "_disabled_at": "2026-10-01"
+    },
+    "XPTUSD": {
+      "enabled": false,
+      "_prev_enabled": null,
+      "_disable_reason": "Not available on HFM broker",
+      "_disabled_at": "2026-10-01"
+    }
+  },
+  "delayed_sl": {
+    "_comment": "DISABLED 2026-10-20. Live 90d: 6 trades lost >1R, total excess -6.13R, 5 of 6 crypto, 4 of 6 with swap never fired (still in 3R-wide disaster window). 90d sumR -3.21R; capped at -1R would be +2.92R. The entire 90d loss is this mechanism. Planned SL now applies from entry. Per-instrument delay_sl_bars overrides are inert while enabled=false.",
+    "enabled": false,
+    "_prev_enabled": true,
+    "emergency_mult": 3.0,
+    "default_delay_bars": 6
+  },
+  "tp_safety_net": {
+    "enabled": true,
+    "near_tp_buffer_R": 0.05,
+    "recent_bars_to_check": 3,
+    "min_age_seconds": 60
+  },
+  "be_trail": {
+    "_comment": "REVERTED 2026-10-20 to +1.0R trigger. Bar-level replay of 97 live trades (planned SL from entry, chandelier 2.0/2.5x): be1.0/0.5 = +9.34R vs be1.5/0.5 = +5.60R (+3.73R). Raising the trigger let more +1R trades reverse to -1R than it let winners run; meanWin fell but meanR rose. The Oct-7 change was descriptive (57% exit at +0.5R), not a counterfactual replay. Not statistically significant at n=97, but it reverses an equally-unsignificant change with a stronger method. Prior note: RECALIBRATED 2026-10-07 to +1.5R trigger / +0.5R offset. Data: 28 live winners since Aug 16 showed 57% exit at +0.5R-+1R via BE-trail cutoff; mean win was +1.27R vs backtest +1.91R (0.64R truncation per winner). Raising trigger lets more winners develop past +1R before BE-trail cuts them. Trade-off: trades that reach +1R and reverse before +1.5R will now hit full SL instead of exiting at +0.5R. Risk/reward: 57% of winners pulled a +0.5R each means we're giving up ~16R across 28 trades IF the raised trigger lets even a fraction run to TP. Previous 2026-07-02 config kept here under _prev_config.",
+    "_prev_config": {
+      "_comment": "RECALIBRATED 2026-07-02: uniform +1.0R trigger, +0.5R offset. Data: only 4.2%/8.4% of live trades reach +2R/+1.5R respectively. BE at +1.0R catches trades that show real strength and locks 50% of R; chandelier runs the 4% that get to +2R. Previous 0.5R triggers on ETH/US100/XAU were too tight (76% BE-scratches). Complete removal left 91% of trades unprotected between +0.5R and +2R.",
+      "default_trigger_R": 1.0,
+      "default_offset_R": 0.5
+    },
+    "enabled": true,
+    "default_trigger_R": 1.0,
+    "default_offset_R": 0.5,
+    "per_instrument": {
+      "XAUUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "US500": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "DE40": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "US100": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "ETHUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "USOIL": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "JP225": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true,
+        "_prev_active": false
+      },
+      "CHFJPY": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true,
+        "_prev_active": false
+      },
+      "XAGUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "BTCUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "UKOIL": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "COPPER": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "GBPUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "EURUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "US30": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "US2000": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "UK100": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "EU50": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "XPTUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "EURJPY": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "USDCAD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "USDJPY": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      },
+      "AUDUSD": {
+        "be_trigger_R": 1.0,
+        "be_offset_R": 0.5,
+        "active": true
+      }
+    },
+    "_disabled_at": "2026-07-01",
+    "_pre_disable_state": {
+      "enabled": true,
+      "default_trigger_R": 1.0,
+      "per_instrument_triggers": {
+        "XAUUSD": 0.5,
+        "US500": 1.0,
+        "DE40": 1.0,
+        "JP225": 1.0,
+        "CHFJPY": 1.0,
+        "US100": 0.5,
+        "ETHUSD": 0.5,
+        "USOIL": 2.0
+      }
+    },
+    "_pre_recalibrate_state": {
+      "enabled": false,
+      "default_trigger_R": 1.0,
+      "default_offset_R": 0.1,
+      "per_instrument": {
+        "XAUUSD": {
+          "be_trigger_R": 0.5,
+          "be_offset_R": 0.1,
+          "active": true
+        },
+        "US500": {
+          "be_trigger_R": 1.0,
+          "be_offset_R": 0.1,
+          "active": true
+        },
+        "DE40": {
+          "be_trigger_R": 1.0,
+          "be_offset_R": 0.1,
+          "active": true
+        },
+        "JP225": {
+          "be_trigger_R": 1.0,
+          "be_offset_R": 0.0,
+          "active": false
+        },
+        "CHFJPY": {
+          "be_trigger_R": 1.0,
+          "be_offset_R": 0.0,
+          "active": false
+        },
+        "US100": {
+          "be_trigger_R": 0.5,
+          "be_offset_R": 0.1,
+          "active": true
+        },
+        "ETHUSD": {
+          "be_trigger_R": 0.5,
+          "be_offset_R": 0.1,
+          "active": true
+        },
+        "USOIL": {
+          "be_trigger_R": 2.0,
+          "be_offset_R": 0.1,
+          "active": true
+        }
+      },
+      "note": "Was disabled at 2026-07-01 based on chandelier-only backtest thesis. Recalibrated 2026-07-02 after 4.2%-chandelier-hit-rate data."
+    }
+  },
+  "decay_sl": {
+    "_comment": "Progressive time-decay SL tightening with per-instrument schedules from per_asset_decay sweep 2026-05-14. Defaults (xagg_fast) apply to any instrument not in per_instrument map. USOIL has enabled=false (no decay won outright). Slow-developing pairs (JP225 vagg_slow, HK50 ultra_slow, ETHUSD vagg) get gentler schedules.",
+    "enabled": true,
+    "start_bars": 3,
+    "every_bars": 2,
+    "step_R": 0.35,
+    "max_R": 0.85,
+    "per_instrument": {
+      "XAUUSD": {
+        "start_bars": 3,
+        "every_bars": 2,
+        "step_R": 0.35,
+        "max_R": 0.85
+      },
+      "US500": {
+        "start_bars": 4,
+        "every_bars": 3,
+        "step_R": 0.3,
+        "max_R": 0.85
+      },
+      "DE40": {
+        "start_bars": 3,
+        "every_bars": 2,
+        "step_R": 0.35,
+        "max_R": 0.85
+      },
+      "JP225": {
+        "start_bars": 8,
+        "every_bars": 4,
+        "step_R": 0.2,
+        "max_R": 0.75
+      },
+      "CHFJPY": {
+        "start_bars": 4,
+        "every_bars": 3,
+        "step_R": 0.3,
+        "max_R": 0.85
+      },
+      "US100": {
+        "start_bars": 5,
+        "every_bars": 3,
+        "step_R": 0.3,
+        "max_R": 0.8
+      },
+      "ETHUSD": {
+        "start_bars": 6,
+        "every_bars": 4,
+        "step_R": 0.25,
+        "max_R": 0.8
+      },
+      "USOIL": {
+        "enabled": false,
+        "_note": "decay_off won per_asset_decay test for USOIL -- slow-developing oil setups suffer under aggressive squeezes"
+      }
+    }
+  },
+  "adaptive_sl": {
+    "_comment": "Regime-state-triggered SL tightening (chop dwell). Disabled in max-config â€” decay_sl supersedes it operationally (decay fires first on any slow trade regardless of regime).",
+    "enabled": false,
+    "default_tighten_atr": 0.5,
+    "default_dwell": 2,
+    "per_instrument": {
+      "XAUUSD": {
+        "tighten_atr": 0.5,
+        "dwell": 1,
+        "active": true
+      },
+      "US500": {
+        "tighten_atr": 0.5,
+        "dwell": 1,
+        "active": false
+      },
+      "DE40": {
+        "tighten_atr": 0.5,
+        "dwell": 3,
+        "active": true
+      },
+      "JP225": {
+        "tighten_atr": 0.75,
+        "dwell": 2,
+        "active": false
+      },
+      "CHFJPY": {
+        "tighten_atr": 0.3,
+        "dwell": 1,
+        "active": true
+      },
+      "US100": {
+        "tighten_atr": 0.5,
+        "dwell": 1,
+        "active": true
+      },
+      "ETHUSD": {
+        "tighten_atr": 1.0,
+        "dwell": 3,
+        "active": true
+      },
+      "USOIL": {
+        "tighten_atr": 1.0,
+        "dwell": 3,
+        "active": true
+      }
+    }
+  },
+  "novelty": {
+    "_comment": "Disabled â€” grand_sweep showed novelty filter hurts at risk >= 6.5%.",
+    "enabled": false,
+    "baselines_path": "novelty_baselines.json",
+    "mode": "downscale_only",
+    "floor": 0.5,
+    "ceiling": 1.5
+  },
+  "stale_exit": {
+    "_comment": "Kept ON as backstop, though decay_sl xagg_fast will catch most stalled trades well before 72h.",
+    "enabled": true,
+    "stale_bars": 72,
+    "progress_R": 0.75
+  },
+  "per_inst_dd_throttle": {
+    "_comment": "V_INST_DD: halve risk on instruments whose cumulative R drawdown >= 5R. Critical DD lever.",
+    "enabled": true,
+    "threshold_r": 5.0,
+    "scale": 0.5
+  },
+  "dd_circuit_breaker": {
+    "_comment": "RECOVERY-MODE 2026-07-01: loosened 30.0/50.0 -> 35/55. BE-trail disabled means winners can grow past +0.1R BE-lock into +2R+ chandelier zone; DD math improves so tighter ratchet no longer needed. Combined with equity_peak rebase, effective DD headroom is 55% of NEW baseline.",
+    "enabled": true,
+    "throttle_pct": 25.0,
+    "throttle_scale": 0.5,
+    "pause_pct": 40.0,
+    "_prev_40_60_until_2026-10-20": "throttle 40 / pause 60 — at 2% base risk a 40% DD is ~20 straight losses; retightened with the risk cut",
+    "_pre_survival_throttle_pct": 35.0,
+    "_pre_survival_pause_pct": 55.0,
+    "_survival_note": "Loosened 35.0/55.0 -> 40/60 (protection-winner values) after base_risk drop 12->7. Smaller per-loss DD means tighter ratchet was overprotective."
+  },
+  "profit_ratchet": {
+    "enabled": true,
+    "bank_above_pct": 50.0,
+    "bank_pct": 25.0,
+    "_comment": "Bank 25% of equity gains above 50% from start_equity. Preserves gains, doesn't change signal. Risk-free (compared to position sizing in general)."
+  },
+  "execution": {
+    "_comment": "Same caps as max config. max_worst_case_mult 4.0 still applies during delay window â€” decay_sl only activates POST-delay.",
+    "entry_mode": "market",
+    "max_concurrent_positions": 6,
+    "_max_conc_2026-10-22": "3 -> 6. The 3 was set 2026-07-05 at 4% base risk (3x4% = 12% simultaneous). At 2% base the same budget is ~6. Universe is now 25 instruments (was 9) and on 2026-10-22 the cap silently blocked 7 valid signals (ETHUSD/BTCUSD/EURUSD/NZDJPY/CHFJPY/USOIL/GBPJPY) between 08:00 and 15:00 UTC while JP225+add+NZDUSD were open. Scale-in adds no longer count toward the cap (code). portfolio_heat_cap_pct=30 and correlation_skip remain the risk governors.",
+    "max_spread_pips_default": 5.0,
+    "_spread_caps_comment": "Bumped 2026-05-21 from data-driven analysis: US100 250 -> 350 (observed p95=390, half of skips were 290-400 range = legit volatility, not garbage). DE40/JP225 caps stay tight -- their wide spreads are off-hours illiquidity, not news.",
+    "max_spread_pips_overrides": {
+      "USDCHF": 3.0,
+      "NZDUSD": 3.0,
+      "GBPJPY": 30.0,
+      "AUDJPY": 30.0,
+      "LTCUSD": 500.0,
+      "XRPUSD": 500.0,
+      "ADAUSD": 500.0,
+      "SOLUSD": 500.0,
+      "DOTUSD": 500.0,
+      "AUS200": 200.0,
+      "FRA40": 200.0,
+      "XAUUSD": 80.0,
+      "US500": 80.0,
+      "US100": 350.0,
+      "DE40": 200.0,
+      "JP225": 400.0,
+      "CHFJPY": 50.0,
+      "USOIL": 100.0,
+      "ETHUSD": 300.0,
+      "XAGUSD": 15.0,
+      "BTCUSD": 5000.0,
+      "UKOIL": 15.0,
+      "GBPUSD": 3.0,
+      "EURUSD": 2.5,
+      "US30": 400.0,
+      "US2000": 200.0,
+      "UK100": 150.0,
+      "EU50": 200.0,
+      "XPTUSD": 50.0,
+      "EURJPY": 30.0,
+      "USDCAD": 3.0,
+      "USDJPY": 2.0,
+      "AUDUSD": 3.0
+    },
+    "_risk_overshoot_comment": "Relaxed 1.5 -> 2.0 on 2026-05-18. At $618 equity * 6.9% = $42.65 target risk per trade. Min-lot constraints on XAUUSD/USOIL can push computed risk to ~$60-70 (1.4-1.6x) on the smallest lot sizes -- the 1.5 cap was blocking legitimate trades. Backtest signals from 2026-05-14: 5 valid signals skipped for risk_overshoot.",
+    "max_risk_overshoot_mult": 2.0,
+    "max_worst_case_mult": 4.0,
+    "portfolio_heat_cap_pct": 30.0,
+    "_portfolio_heat_note": "30% (was 19.5%) -- caps total open-position worst-case at 30% of equity. At base=12%, this allows ~2.5 simultaneous trades.",
+    "magic_number": 20260515,
+    "comment": "fx-edge v_protected",
+    "_max_conc_note": "Reduced 9 -> 3. Combined with correlation_skip below, forces the strategy to hold at most 3 uncorrelated positions."
+  },
+  "regime_predictor": {
+    "train_window": 2000,
+    "refit_every": 200,
+    "refit_every_hours": 24.0,
+    "lookahead": 12,
+    "warmup_bars": 2200
+  },
+  "entry_blackout": {
+    "enabled": true,
+    "_comment": "Block entries at UTC hours where 2026-05 -> 2026-07 live data showed consistent negative expectancy across multiple instruments. Sample size small (n=7 per hour); revisit after 20+ more trades.",
+    "per_instrument": {
+      "XAUUSD": [
+        4,
+        21
+      ],
+      "US500": [
+        4,
+        21
+      ],
+      "DE40": [
+        4,
+        21
+      ],
+      "JP225": [
+        4,
+        21
+      ],
+      "CHFJPY": [
+        4,
+        21
+      ],
+      "US100": [
+        4,
+        21
+      ],
+      "ETHUSD": [
+        4,
+        21
+      ],
+      "USOIL": [
+        4,
+        21
+      ]
+    }
+  },
+  "news_blackout": {
+    "enabled": true,
+    "windows": [
+      {
+        "name": "NFP",
+        "weekday": 4,
+        "ordinal": 1,
+        "utc_start": "13:25",
+        "utc_end": "14:30",
+        "applies_to": [
+          "XAUUSD",
+          "US500",
+          "US100",
+          "USOIL"
+        ]
+      },
+      {
+        "name": "US_CPI",
+        "weekday": 1,
+        "ordinal": 2,
+        "utc_start": "13:25",
+        "utc_end": "13:45",
+        "applies_to": [
+          "XAUUSD",
+          "US500",
+          "US100",
+          "USOIL"
+        ]
+      },
+      {
+        "name": "US_CPI_w",
+        "weekday": 2,
+        "ordinal": 2,
+        "utc_start": "13:25",
+        "utc_end": "13:45",
+        "applies_to": [
+          "XAUUSD",
+          "US500",
+          "US100",
+          "USOIL"
+        ]
+      },
+      {
+        "name": "ECB",
+        "weekday": 3,
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "CHFJPY"
+        ]
+      },
+      {
+        "name": "BOE",
+        "weekday": 3,
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY"
+        ]
+      },
+      {
+        "name": "FOMC_2026_06_18",
+        "dates": [
+          "2026-06-18"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "US500",
+          "US100",
+          "USOIL",
+          "DE40",
+          "JP225"
+        ]
+      },
+      {
+        "name": "FOMC_2026_07_30",
+        "dates": [
+          "2026-07-30"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "US500",
+          "US100",
+          "USOIL",
+          "DE40",
+          "JP225"
+        ]
+      },
+      {
+        "name": "AUTO_CB_ECB_2026-10-29",
+        "dates": [
+          "2026-10-29"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2026-12-17",
+        "dates": [
+          "2026-12-17"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-01-28",
+        "dates": [
+          "2027-01-28"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-03-11",
+        "dates": [
+          "2027-03-11"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-04-22",
+        "dates": [
+          "2027-04-22"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-06-03",
+        "dates": [
+          "2027-06-03"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-07-22",
+        "dates": [
+          "2027-07-22"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-09-09",
+        "dates": [
+          "2027-09-09"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-10-28",
+        "dates": [
+          "2027-10-28"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_ECB_2027-12-16",
+        "dates": [
+          "2027-12-16"
+        ],
+        "utc_start": "12:10",
+        "utc_end": "13:30",
+        "applies_to": [
+          "DE40",
+          "EU50",
+          "CHFJPY",
+          "EURUSD",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2026-11-05",
+        "dates": [
+          "2026-11-05"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2026-12-17",
+        "dates": [
+          "2026-12-17"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-02-04",
+        "dates": [
+          "2027-02-04"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-03-18",
+        "dates": [
+          "2027-03-18"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-05-06",
+        "dates": [
+          "2027-05-06"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-06-17",
+        "dates": [
+          "2027-06-17"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-08-05",
+        "dates": [
+          "2027-08-05"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-09-16",
+        "dates": [
+          "2027-09-16"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-11-04",
+        "dates": [
+          "2027-11-04"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOE_2027-12-16",
+        "dates": [
+          "2027-12-16"
+        ],
+        "utc_start": "11:55",
+        "utc_end": "12:30",
+        "applies_to": [
+          "CHFJPY",
+          "GBPUSD",
+          "UK100"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2026-10-30",
+        "dates": [
+          "2026-10-30"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2026-12-18",
+        "dates": [
+          "2026-12-18"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-01-22",
+        "dates": [
+          "2027-01-22"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-03-18",
+        "dates": [
+          "2027-03-18"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-04-27",
+        "dates": [
+          "2027-04-27"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-06-15",
+        "dates": [
+          "2027-06-15"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-07-29",
+        "dates": [
+          "2027-07-29"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-09-17",
+        "dates": [
+          "2027-09-17"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-10-29",
+        "dates": [
+          "2027-10-29"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOJ_2027-12-17",
+        "dates": [
+          "2027-12-17"
+        ],
+        "utc_start": "01:55",
+        "utc_end": "07:00",
+        "applies_to": [
+          "JP225",
+          "CHFJPY",
+          "EURJPY"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_SNB_2026-12-10",
+        "dates": [
+          "2026-12-10"
+        ],
+        "utc_start": "08:25",
+        "utc_end": "10:00",
+        "applies_to": [
+          "CHFJPY",
+          "EURUSD",
+          "GBPUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_SNB_2027-03-25",
+        "dates": [
+          "2027-03-25"
+        ],
+        "utc_start": "08:25",
+        "utc_end": "10:00",
+        "applies_to": [
+          "CHFJPY",
+          "EURUSD",
+          "GBPUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_SNB_2027-06-17",
+        "dates": [
+          "2027-06-17"
+        ],
+        "utc_start": "08:25",
+        "utc_end": "10:00",
+        "applies_to": [
+          "CHFJPY",
+          "EURUSD",
+          "GBPUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_SNB_2027-09-23",
+        "dates": [
+          "2027-09-23"
+        ],
+        "utc_start": "08:25",
+        "utc_end": "10:00",
+        "applies_to": [
+          "CHFJPY",
+          "EURUSD",
+          "GBPUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_SNB_2027-12-09",
+        "dates": [
+          "2027-12-09"
+        ],
+        "utc_start": "08:25",
+        "utc_end": "10:00",
+        "applies_to": [
+          "CHFJPY",
+          "EURUSD",
+          "GBPUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2026-11-05",
+        "dates": [
+          "2026-11-05"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2026-12-16",
+        "dates": [
+          "2026-12-16"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-01-27",
+        "dates": [
+          "2027-01-27"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-03-17",
+        "dates": [
+          "2027-03-17"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-04-28",
+        "dates": [
+          "2027-04-28"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-06-09",
+        "dates": [
+          "2027-06-09"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-07-28",
+        "dates": [
+          "2027-07-28"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-09-15",
+        "dates": [
+          "2027-09-15"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-11-04",
+        "dates": [
+          "2027-11-04"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_FOMC_2027-12-15",
+        "dates": [
+          "2027-12-15"
+        ],
+        "utc_start": "17:55",
+        "utc_end": "19:30",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "DE40",
+          "JP225",
+          "EU50",
+          "GBPUSD",
+          "EURUSD",
+          "EURJPY",
+          "BTCUSD",
+          "ETHUSD"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2026-10-28",
+        "dates": [
+          "2026-10-28"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2026-12-09",
+        "dates": [
+          "2026-12-09"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-01-27",
+        "dates": [
+          "2027-01-27"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-03-10",
+        "dates": [
+          "2027-03-10"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-04-14",
+        "dates": [
+          "2027-04-14"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-06-02",
+        "dates": [
+          "2027-06-02"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-07-28",
+        "dates": [
+          "2027-07-28"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-09-08",
+        "dates": [
+          "2027-09-08"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-10-27",
+        "dates": [
+          "2027-10-27"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_CB_BOC_2027-12-08",
+        "dates": [
+          "2027-12-08"
+        ],
+        "utc_start": "14:55",
+        "utc_end": "15:30",
+        "applies_to": [
+          "USOIL",
+          "UKOIL"
+        ],
+        "_source": "hardcoded_cb"
+      },
+      {
+        "name": "AUTO_FRED_NFP_2026-11-06",
+        "dates": [
+          "2026-11-06"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "DE40",
+          "JP225",
+          "EU50"
+        ],
+        "_source": "FRED",
+        "_release_id": 50
+      },
+      {
+        "name": "AUTO_FRED_NFP_2026-12-04",
+        "dates": [
+          "2026-12-04"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "DE40",
+          "JP225",
+          "EU50"
+        ],
+        "_source": "FRED",
+        "_release_id": 50
+      },
+      {
+        "name": "AUTO_FRED_CPI_2026-11-10",
+        "dates": [
+          "2026-11-10"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "DE40",
+          "JP225",
+          "EU50"
+        ],
+        "_source": "FRED",
+        "_release_id": 10
+      },
+      {
+        "name": "AUTO_FRED_RETAIL_SALES_2026-11-17",
+        "dates": [
+          "2026-11-17"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY"
+        ],
+        "_source": "FRED",
+        "_release_id": 9
+      },
+      {
+        "name": "AUTO_FRED_PCE_2026-10-29",
+        "dates": [
+          "2026-10-29"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY"
+        ],
+        "_source": "FRED",
+        "_release_id": 54
+      },
+      {
+        "name": "AUTO_FRED_PCE_2026-11-25",
+        "dates": [
+          "2026-11-25"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY"
+        ],
+        "_source": "FRED",
+        "_release_id": 54
+      },
+      {
+        "name": "AUTO_FRED_PPI_2026-11-13",
+        "dates": [
+          "2026-11-13"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY"
+        ],
+        "_source": "FRED",
+        "_release_id": 46
+      }
+    ],
+    "_comment_v2": "Per-asset applies_to added 2026-05-21. NFP/CPI affect USD-priced; ECB affects EU; FOMC affects all risk assets; ETHUSD/HK50 ignore most news. Backtest validated +2.4% return uplift.",
+    "_last_auto_refresh": "2026-10-25T04:00:56.667670+00:00"
+  },
+  "polling": {
+    "tick_interval_seconds": 30,
+    "log_heartbeat_minutes": 15
+  },
+  "loss_streak_throttle": {
+    "_comment": "Halve risk after 3 consecutive losing trades. Resets on next winner. Faster than dd_circuit_breaker (40% account DD): a 5-loss streak at 7% risk is -35% which is below DD-CB threshold, but this fires after 3 losses (-21%) for early protection.",
+    "enabled": true,
+    "threshold": 3,
+    "scale": 0.5
+  },
+  "chandelier": {
+    "_comment": "Chandelier (ATR-trail) exit for big winners. Once profit reaches trigger_R, replace BE-lock with SL = close - atr_mult * ATR (continuously updated, only RAISES). Lets winners run far past 2.5R TP. THE single biggest 2026-05-19 backtest gain: +50.3M% return at 64.74% DD vs baseline +19.88M% / 69.20% DD.",
+    "enabled": true,
+    "trigger_R": 2.0,
+    "atr_mult": 2.5,
+    "atr_period": 14,
+    "_prev_atr_mult": 2.0,
+    "_widen_note": "WIDENED 2026-08-04: 2.0x -> 2.5x. Data: 2 of 4 post-H4-fix wins reached chandelier zone (+2.34R, +2.50R). Wider trail captures more of the runner. Only affects winners past +2R (~4% of trades); losers unaffected."
+  },
+  "session_filter_per_instrument": {
+    "_comment": "Per-asset cash-session hours (UTC). Outside = signal skipped. Indices only -- FX/crypto/XAU/oil unfiltered. LIVE benefit: stops ~2000 daily DE40 skip-retry events during off-hours (validated from log analysis). Backtest neutral since yfinance only has in-session bars.",
+    "enabled": true,
+    "hours": {
+      "DE40": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "JP225": [
+        23,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "US500": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "US100": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "US30": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "UK100": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "FRA40": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "_note_2026-10-22": "Agent audit: UK100 (7 of 11 order fails in 90d, all after LSE close) and US30 were missing from this map. Added. Hours are fixed UTC, so each European list now spans both DST states (7-16 covers 07:00-15:30 BST/CEST and 08:00-16:30 GMT/CET; US lists 13-21 cover 13:30-20:00 EDT and 14:30-21:00 EST). The extra edge hour is a pre/post-open bar at full stops_level -- acceptable vs. an outright 10016 rejection.",
+      "AUS200": [
+        23,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "_note_2026-10-21": "FRA40 + AUS200 added after FRA40 retcode 10016 (invalid stops) at 06:00 UTC with a 41-pt SL vs in-session stops_level of 0.5 pt: HFM widens index stops_level outside cash hours (same root cause as UK100's Oct-13 rejections). Euronext Paris cash 07:00-15:30 UTC; ASX cash 23:00-05:00 UTC (NB: overlaps the global 23-05 hour filter, so AUS200 will be near-dormant; it is a 0.2% nano-shadow)."
+    }
+  },
+  "strategy_overrides": {
+    "_comment": "Balance config 2026-05-23: rr_target=2.5 (the proven sweet spot, between rr=3.5 and 1:1) + atr_stop_mult=2.0 (wider SL, addresses 'SL seems short' observation -> smaller losses when SL hits). Result: pays_for_n=3.21 (vs prior 3.18), DD 60.65% (vs 66.5%), return +10.4M% (vs +18.9M% prior). Less compounding, more safety.",
+    "rr_target": 2.5,
+    "atr_stop_mult": 2.0
+  },
+  "position_loss_cap": {
+    "_comment": "Raised 16.0%->30% to match new base_risk_pct=12%. Cap still represents ~2.5R per trade (the disaster_sl safety level). At base=12%, a 2.5R loss = 30% of equity. Tighter caps proven to destroy returns.",
+    "enabled": true,
+    "max_loss_pct_equity": 5.0,
+    "_prev_30pct_at_6pct_base": 30.0,
+    "_note_2026-10-20": "30% was 2.5R at 6% base. Rescaled to 5% = 2.5R at the new 2% base. Same R-backstop, same rationale (tighter than 2.5R proven harmful in backtest); only the base changed.",
+    "min_age_seconds": 60
+  },
+  "external_monitor": {
+    "enabled": true,
+    "webhook_url": "https://hc-ping.com/<YOUR_HEALTHCHECKS_UUID>"
+  },
+  "dow_filter": {
+    "_comment": "Added 2026-10-08 after DOW analysis of 98 trades since 2026-07-01. Tuesday meanR = -0.491R across 13 trades, -$686 realized loss. Clearest DOW signal. Monday is marginally negative (-0.230R / 21 trades / -$6) -- not blocked. Blocking Tue would have avoided ~$1,300 at current risk. Hot-reload disable via enabled=false. Can accept day names (mon/tue/wed/thu/fri/sat/sun) or integers (0=Mon..6=Sun).",
+    "enabled": false,
+    "_disabled_2026-10-22": "The Oct-8 analysis ran on entry_ts that was BROKER time for 82% of trades (auto-adopt path), so 'Tuesday' was really Mon 21:00 - Tue 21:00 UTC. On corrected UTC timestamps: Tue meanR -0.23R, n=13, p=0.58 -- does not clear the p<=0.10 bar the system requires for a filter; counterfactual of the 22 blocked Tuesday signals is +0.01R (neutral). Disabled to recover ~20% of weekdays for trading and learning. Rollback: enabled=true.",
+    "blocked_days": [
+      "tue"
+    ]
+  },
+  "hour_filter": {
+    "_comment": "Added 2026-10-07. Journal analysis of 97 trades since 2026-07-01 showed Asian session (23-05 UTC) runs -0.445R meanR across 20 trades. Blocking 23-05 UTC overall would have saved ~$2.7K across the window and flipped portfolio meanR from -0.098R to +0.049R (positive). Historical fit — forward may differ. Reverse to disable by setting enabled=false.",
+    "enabled": true,
+    "blocked_hours_utc": [
+      20,
+      21,
+      22,
+      23,
+      0,
+      1,
+      2
+    ],
+    "_prev_blocked_hours_utc": [
+      23,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "_recalibrated_2026-10-22": "The Oct-7 analysis used entry_ts that was BROKER time (UTC+3) for 82% of trades, so '23-05' was really 20-02 UTC. On corrected UTC timestamps (n=128): live 23-05 block = blocked -0.28R vs kept +0.10R, p=0.14 (not significant; it was blocking 03-05 UTC which are mildly positive and leaving 20-22 UTC open, 20:00 = -1.05R). 20-02 UTC = blocked -0.56R (n=28) vs kept +0.18R, t=-3.51, p=0.003. Same finding, correct labels. Rollback: copy _prev_blocked_hours_utc back."
+  },
+  "auto_exclusion": {
+    "_comment": "Added 2026-10-07. Auto-skip entries on instruments whose rolling live expectancy is clearly bad AND which have been dormant. AND-gate: a losing-but-active instrument may be in a temporary rough patch; a losing-AND-dormant one has a structural strategy-choice mismatch (regime pulse surfaces this daily). Example: DE40 last 10 trades meanR -0.754R, dormant 48d -> auto-excl fires on next DE40 signal if any. 1-hour cache per instrument so journal isn't hit every poll.",
+    "enabled": true,
+    "lookback_trades": 15,
+    "min_sample": 10,
+    "meanR_threshold": -0.15,
+    "dormant_days": 14
+  },
+  "scale_in": {
+    "_comment": "Added 2026-10-09. Scale-in on winners: when open position's MFE reaches trigger_R, place add (add_fraction × main volume) with SL at main's entry (BE on main) and TP at main's TP. Both legs run independently. Sim 2026-10-07 on 62 recent trades: trigger_R=1.0 add_fraction=0.5 -> +0.053R uplift per trade; trigger_R=0.5 -> +0.115R but earlier/riskier. Starting conservative at 1.0R. Rollback: enabled=false (hot-reload). Code at process_scale_in(). Marks main.scale_in_fired=True after add so only one add per main.",
+    "enabled": true,
+    "_reenabled_2026-10-21": "The Oct-20 disable was based on the broken journal (lost-closes bug). Corrected: 6 closed adds = -0.15, -0.15, -1.03, +1.17 (tp_safety), +1.68 (tp_safety), -0.24 (early_adverse_cut) => sumR +1.28R, 2 winners. Matches the Oct-9 sim (+0.053R). Re-enabled. Design TODO below (add's own BE trigger) still worth doing.",
+    "_disable_note_2026-10-20": "SUPERSEDED (broken-journal data). 6 live scale-in events, 3 closed: -0.15R, -0.15R, -1.03R (sumR -1.33R, 0 winners). Add inherits main's planned_dist so its BE-trail fires only at main's TP — the add never gets BE protection. Sim +0.053R had path-dependency optimism. Re-enable only after a redesign that gives the add its own BE trigger.",
+    "trigger_R": 1.0,
+    "add_fraction": 0.5,
+    "min_age_seconds": 60
+  },
+  "early_adverse_cut": {
+    "_comment": "Added 2026-10-07. Within first `max_bars` H1 bars after entry, close if MFE_R < mfe_floor_R AND MAE_R >= mae_trigger_R. Catches 'immediate opposite movement after entry' pattern -- failed setups that go straight into red with no favorable excursion. Fills a gap in the exit stack: BE/chandelier/decay-SL all fire later. Sim on last-45d trades: K=6/0.5/0.25 cuts 11 of 61 trades, saves ~$650 PnL, no winners touched. Per-instrument overrides for crypto (tighter trigger due to gap risk).",
+    "enabled": true,
+    "max_bars": 6,
+    "mae_trigger_R": 0.5,
+    "mfe_floor_R": 0.25,
+    "min_age_seconds": 60,
+    "per_instrument": {
+      "BTCUSD": {
+        "max_bars": 4,
+        "mae_trigger_R": 0.4,
+        "mfe_floor_R": 0.2
+      },
+      "ETHUSD": {
+        "max_bars": 4,
+        "mae_trigger_R": 0.4,
+        "mfe_floor_R": 0.2
+      }
+    }
+  },
+  "inst_expectancy_throttle": {
+    "_comment": "Per-instrument rolling expectancy throttle. Reads last N closed trades per instrument; if mean R-multiple is deeply negative, halve risk (throttle) or pause entries (pause). Direct response to per-instrument regime shifts that V_INST_DD misses. 2026-10-11: PAUSE now requires BOTH effect-size (meanR <= pause_threshold_R) AND statistical significance (one-sample t-test p-value <= pause_p_value_max). If effect-size says pause but not significant, falls back to throttle_scale (×0.5). Throttle itself remains heuristic (reversible on next winner).",
+    "enabled": true,
+    "min_trades": 10,
+    "_prev_min_trades_until_2026-10-20": 5,
+    "_min_trades_note": "5 -> 10 on 2026-10-20. At R-stdev 1.2, n=5 gives SE 0.54R; a -0.1R throttle on 5 trades is noise. Replay (n=94, 8 methods incl. EB-shrinkage, Kelly, CUSUM) showed NO per-instrument sizing method beats flat on both equity and DD; current throttle flips 17-20x for no gain. Kept as a brake for the untested FX cohort; re-evaluate at n~300.",
+    "lookback_trades": 10,
+    "throttle_threshold_R": -0.1,
+    "throttle_scale": 0.5,
+    "pause_threshold_R": -0.6,
+    "_prev_pause_threshold_R_until_2026-10-20": -0.3,
+    "_pause_loosen_note": "2026-10-20: -0.3 -> -0.6. The pause blocked 183 signals whose counterfactual avg was +0.045R (sumR +8.30R): XAUUSD +17.4R and USOIL +7.4R blocked for nothing, while US500 -12.7R / US100 -5.1R pauses were genuinely protective. Throttle (-0.1R -> 0.5x) still applies in between; only instruments at meanR < -0.6R with p<=0.10 now fully pause. Expected ~+4R/quarter at half size.",
+    "pause_p_value_max": 0.1,
+    "boost_lo_threshold_R": 0.2,
+    "boost_lo_scale": 1.25,
+    "boost_hi_threshold_R": 0.5,
+    "boost_hi_scale": 1.5,
+    "_boost_note": "Added 2026-07-01: instruments with proven positive per-instrument expectancy get scaled up. Composes with portfolio_regime_boost. Backed by line 336 code path (asymmetric leverage on positive-edge instruments).",
+    "_pre_survival_pause_threshold_R": -0.3,
+    "_pre_survival_throttle_threshold_R": -0.1,
+    "_survival_note": "Tightened 2026-07-02: pause at meanR<=-0.2 (was -0.3), throttle at meanR<=-0.05 (was -0.1). Concentrates capital on ETHUSD (only instrument with positive live edge). Projected effect: pauses JP225/US500/USOIL/XAUUSD, throttles US100, ETHUSD stays 1.0x.",
+    "exempt_instruments": [],
+    "_exempt_note": "JP225 (+0.51R backtest) and USOIL (+0.47R backtest) were paused in live based on bug-affected pre-fix history. Exempt them so they can trade again post-H4-fix and rebuild expectancy against real UTC bar data.",
+    "_pre_freshstart": {
+      "pause_threshold_R": -0.2,
+      "throttle_threshold_R": -0.05,
+      "exempt_instruments": [
+        "JP225",
+        "USOIL"
+      ]
+    },
+    "min_trade_date_utc": "2026-08-16T00:00:00+00:00",
+    "_freshstart_note": "FRESH START 2026-08-16: min_trade_date_utc=2026-08-16T00:00:00+00:00. Pre-H4-fix losses no longer count. Reverted pause -0.2 -> -0.3 and throttle -0.05 -> -0.1 (back to pre-survival values). Exempt list emptied -- all instruments trade under the same rules, throttle re-earns based on post-2026-08-16 data only."
+  },
+  "portfolio_regime_throttle": {
+    "_comment": "Bidirectional. Downside: throttle 0.5x at meanR<-0.2, pause at meanR<-0.5. Upside (growth-mode): boost 1.2x at meanR>0.2, 1.5x at meanR>0.4. Composes with all other multipliers. Activated 2026-06-02.",
+    "enabled": true,
+    "lookback_trades": 20,
+    "min_trades": 10,
+    "throttle_threshold_R": -0.2,
+    "throttle_scale": 0.5,
+    "pause_threshold_R": -0.5,
+    "boost_lo_threshold_R": 0.2,
+    "boost_lo_scale": 1.2,
+    "boost_hi_threshold_R": 0.4,
+    "boost_hi_scale": 1.5,
+    "_pre_freshstart_min_trade_date_utc": null,
+    "min_trade_date_utc": "2026-08-16T00:00:00+00:00",
+    "_freshstart_note": "FRESH START 2026-08-16: min_trade_date_utc=2026-08-16T00:00:00+00:00. Portfolio-level regime throttle now sees only post-fix trades."
+  },
+  "correlation_skip": {
+    "enabled": true,
+    "_comment": "Skip entry if same-direction position already open in any group. Data (2026-07-02 audit): 5 US500+US100 same-direction overlaps totaled -5.21R combined -- every pair lost. Added 2026-07-05.",
+    "groups": [
+      [
+        "US500",
+        "US100",
+        "DE40"
+      ],
+      [
+        "XAUUSD",
+        "USOIL"
+      ]
+    ],
+    "mode": "scale",
+    "scale_factor": 0.5,
+    "_mode_change_note": "MODE CHANGE 2026-09-03: skip -> scale (factor 0.5). Previously blocked correlated same-direction entries entirely. Now allows at 50% size -- captures opportunity while capping concentration risk. Effective risk per correlated trade: 5% base * 0.5 corr_scale = 2.5%. Same total portfolio worst-case as skip mode when 2 correlated positions are open (2 * 2.5% = 5%, matches 1 * 5% under skip)."
+  },
+  "strategy_per_instrument": {
+    "_comment": "Reverted 2026-10-07 to a near-Aug-16-era config. Oct 1 momentum/breakout switches collapsed non-crypto trade frequency 1.73/day -> 0.29/day (85% drop) and drove crypto to 75% of all signals. ETHUSD moved from breakout to pullback (back-to-back -2R gap-through-SL losses 10/02 and 10/05). BTCUSD KEPT on breakout since it was performing OK (4 trades 75% WR +0.08R). ML rescue model remains active on BTCUSD_breakout; USDJPY/AUDUSD ML flags become no-ops (no pullback model), can retrain if needed.",
+    "_rollback_target": {
+      "_comment": "The Oct 1 config this revert is undoing -- for easy restore if the revert underperforms over 30-50 trades.",
+      "XAUUSD": "breakout",
+      "ETHUSD": "breakout",
+      "EURUSD": "momentum",
+      "US30": "breakout",
+      "XPTUSD": "momentum",
+      "EURJPY": "momentum",
+      "US500": "momentum",
+      "US100": "momentum",
+      "DE40": "momentum",
+      "GBPUSD": "breakout",
+      "USDCAD": "momentum",
+      "USDJPY": "momentum",
+      "AUDUSD": "momentum"
+    },
+    "BTCUSD": "ensemble",
+    "ETHUSD": "ensemble",
+    "CHFJPY": "ensemble",
+    "USDCAD": "ensemble",
+    "CADJPY": "momentum",
+    "NZDJPY": "breakout",
+    "US500": "momentum",
+    "DE40": "momentum",
+    "GBPUSD": "momentum",
+    "_gbpusd_note_2026-10-20": "breakout -> momentum. Only dormant instrument where any strategy clears the stat gate: momentum avg +0.145R, 12mo +0.225R on n=92, p=0.096. Breakout was +0.175R avg but p=0.118 (just missed).",
+    "_6yr_walk_forward_note": "Oct 1 reassignment partially reverted 2026-10-07 (Path B). 13 instruments reverted to pullback for signal frequency recovery; 3 retained on their Oct 1 strat where 6yr walk-forward shows pullback is actually NEGATIVE on 12mo (US500 pullback -0.249R vs momentum +0.219R, DE40 pullback -0.060R vs momentum +0.131R, GBPUSD pullback -0.137R vs breakout +0.241R). BTCUSD breakout kept (live-validated). The compromise recovers trade cadence while preserving the clearest backtest edges."
+  },
+  "multi_signal_confirmation": {
+    "_comment": "DISABLED 2026-10-13 after finding it was silently overriding strategy_per_instrument='ensemble' on ETHUSD (and over-filtering EURUSD/XAUUSD/EURJPY). _get_entry_signal checks msc first and bypasses the strategy module entirely. Impact: ETHUSD had 20 trades in prior 20-trade window but only 1 signal in the 3 days post ensemble-deploy because MSC was running 2/3-strict instead of ensemble 1/3-union.",
+    "_prev_enabled": true,
+    "enabled": false,
+    "per_instrument": {
+      "_prev_EURUSD": true,
+      "_prev_XAUUSD": true,
+      "_prev_ETHUSD": true,
+      "_prev_XPTUSD": true,
+      "_prev_EURJPY": true
+    },
+    "_note": "To re-enable, set enabled=true and rename _prev_* keys. But first resolve conflict with strategy_per_instrument.<INS>='ensemble' — the two filters pull opposite directions (MSC requires 2/3 agree; ensemble takes ANY one firing)."
+  },
+  "vol_regime_filter_per_instrument": {
+    "_comment": "Vol filter enabled only on instruments with validated edge.",
+    "enabled_for": [
+      "XAGUSD",
+      "UKOIL"
+    ],
+    "atr_norm_window": 500,
+    "atr_norm_min": 0.6,
+    "atr_norm_max": 2.0,
+    "_note": "Needs code wiring to activate per-instrument. Config recorded for future deploy."
+  },
+  "regime_filter": {
+    "_comment": "Skip entries when H4 ADX >= adx_threshold. Backtest validated 3/3 windows with positive meanR uplift at ~30% trade reduction. Deploys 2026-10-01.",
+    "enabled": false,
+    "adx_threshold": 30.0,
+    "adx_period": 14,
+    "_rolled_back_at": "2026-10-03",
+    "_rollback_reason": "P1 priority: increase trade count. ADX filter cut ~30% of trades for only +0.02-0.04R per-trade uplift. Trade count was becoming too low for statistical confidence. Config preserved for easy re-enable."
+  },
+  "ml_rescue": {
+    "_comment": "ML-based rescue filter for instruments that fail baseline walk-forward but show positive meanR when filtered by trained RandomForest classifier. Models in ml_models/{INS}_{strat}.joblib. Threshold from training-set median prob.",
+    "enabled": true,
+    "per_instrument": {
+      "BTCUSD": true,
+      "USDJPY": true,
+      "AUDUSD": true
+    }
+  }
+}

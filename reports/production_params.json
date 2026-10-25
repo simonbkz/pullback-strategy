@@ -1,0 +1,36 @@
+{
+  "_comment": "Use these (the stock defaults) for live deployment. WF-tuned params from mt5_optimal_params.json overfit on 2024-2026 data and should not be deployed without further validation.",
+  "global_defaults": {
+    "HigherTF": "PERIOD_H4",
+    "EntryTF": "PERIOD_H1",
+    "FastEMA": 50,
+    "SlowEMA": 200,
+    "PullbackEMA": 20,
+    "SwingLookback": 20,
+    "ATRPeriod": 14,
+    "ATRStopMult": 1.5,
+    "RR_Target": 2.5,
+    "RiskPercent": 1.0,
+    "MaxSpreadPips": 2.0
+  },
+  "ship_grade_instruments": [
+    "XAUUSD", "US500", "DE40", "JP225", "CHFJPY", "HK50"
+  ],
+  "instrument_overrides": {
+    "US500":  {"MaxSpreadPips": 5.0},
+    "US100":  {"MaxSpreadPips": 5.0},
+    "US30":   {"MaxSpreadPips": 5.0},
+    "DE40":   {"MaxSpreadPips": 5.0},
+    "JP225":  {"MaxSpreadPips": 10.0},
+    "HK50":   {"MaxSpreadPips": 10.0},
+    "XAUUSD": {"MaxSpreadPips": 5.0},
+    "USOIL":  {"MaxSpreadPips": 5.0}
+  },
+  "portfolio_rules": {
+    "max_concurrent_positions": 3,
+    "per_trade_risk_pct": 1.0,
+    "daily_loss_halt_pct": 3.0,
+    "weekly_loss_halt_pct": 6.0,
+    "drawdown_review_pct": 25.0
+  }
+}

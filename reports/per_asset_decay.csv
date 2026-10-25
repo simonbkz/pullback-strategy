@@ -1,0 +1,3 @@
+config,trades,return_pct,max_dd_pct
+uniform_xagg_fast,744,6291223.577559909,69.41148839234889
+per_asset_best,685,21982923.612444084,70.10413886475459
