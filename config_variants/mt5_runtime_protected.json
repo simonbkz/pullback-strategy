@@ -791,7 +791,13 @@
     "_portfolio_heat_note": "30% (was 19.5%) -- caps total open-position worst-case at 30% of equity. At base=12%, this allows ~2.5 simultaneous trades.",
     "magic_number": 20260515,
     "comment": "fx-edge v_protected",
-    "_max_conc_note": "Reduced 9 -> 3. Combined with correlation_skip below, forces the strategy to hold at most 3 uncorrelated positions."
+    "_max_conc_note": "Reduced 9 -> 3. Combined with correlation_skip below, forces the strategy to hold at most 3 uncorrelated positions.",
+    "fill_sanity": {
+      "_comment": "2026-10-25 audit: a stale signal (bar evaluated 16 min late after a position closed) was filled 1.7R from the signal close with RR 0.29. Gate at order time: fill must be within max_drift_R of the signal bar close and actual reward-to-risk >= min_rr, else journal stale_fill. Bars that close while in position are now journaled in_position and burned (backtest semantics).",
+      "enabled": true,
+      "max_drift_R": 0.3,
+      "min_rr": 2.0
+    }
   },
   "regime_predictor": {
     "train_window": 2000,
@@ -1919,6 +1925,35 @@
         "_release_id": 10
       },
       {
+        "name": "AUTO_FRED_CPI_2026-12-10",
+        "dates": [
+          "2026-12-10"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "DE40",
+          "JP225",
+          "EU50"
+        ],
+        "_source": "FRED",
+        "_release_id": 10
+      },
+      {
         "name": "AUTO_FRED_RETAIL_SALES_2026-11-17",
         "dates": [
           "2026-11-17"
@@ -1939,6 +1974,64 @@
         ],
         "_source": "FRED",
         "_release_id": 9
+      },
+      {
+        "name": "AUTO_FRED_GDP_2026-10-29",
+        "dates": [
+          "2026-10-29"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "DE40",
+          "JP225",
+          "EU50"
+        ],
+        "_source": "FRED",
+        "_release_id": 53
+      },
+      {
+        "name": "AUTO_FRED_GDP_2026-11-25",
+        "dates": [
+          "2026-11-25"
+        ],
+        "utc_start": "12:25",
+        "utc_end": "13:00",
+        "applies_to": [
+          "XAUUSD",
+          "XAGUSD",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "USOIL",
+          "GBPUSD",
+          "EURUSD",
+          "USDJPY",
+          "US500",
+          "US100",
+          "US30",
+          "US2000",
+          "DE40",
+          "JP225",
+          "EU50"
+        ],
+        "_source": "FRED",
+        "_release_id": 53
       },
       {
         "name": "AUTO_FRED_PCE_2026-10-29",
@@ -2008,7 +2101,7 @@
       }
     ],
     "_comment_v2": "Per-asset applies_to added 2026-05-21. NFP/CPI affect USD-priced; ECB affects EU; FOMC affects all risk assets; ETHUSD/HK50 ignore most news. Backtest validated +2.4% return uplift.",
-    "_last_auto_refresh": "2026-10-25T04:00:56.667670+00:00"
+    "_last_auto_refresh": "2026-10-26T04:00:22.935295+00:00"
   },
   "polling": {
     "tick_interval_seconds": 30,

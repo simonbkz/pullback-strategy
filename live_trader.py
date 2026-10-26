@@ -813,10 +813,10 @@ def _correlation_scale(cfg: dict, ins: str, side: str, magic: int) -> tuple[floa
         if ins in g:
             matching_group = g
             break
-    if not matching_group:
-        return 1.0, ""
     positions = mt5.positions_get() or []
     symbol_map = cfg.get("symbol_map", {})
+    if not matching_group:
+        return _currency_cap_scale(blk, ins, side, magic, positions, symbol_map)
     for p in positions:
         if p.magic != magic:
             continue
@@ -830,6 +830,57 @@ def _correlation_scale(cfg: dict, ins: str, side: str, magic: int) -> tuple[floa
             if mode == "scale":
                 return scale_factor, f"correlation_scale({scale_factor}x): {p_ins} {p_side} open (group {matching_group})"
             return 0.0, f"correlation_skip: {p_ins} {p_side} already open (group {matching_group})"
+    return 1.0, ""
+
+
+_FX_CCY = {"USD", "EUR", "GBP", "JPY", "CHF", "AUD", "NZD", "CAD"}
+
+
+def _fx_legs(ins: str, side: str) -> set:
+    """Currency-direction legs of an FX position: long EURJPY = long EUR + short JPY."""
+    if len(ins) == 6 and ins[:3] in _FX_CCY and ins[3:] in _FX_CCY:
+        b, q = ins[:3], ins[3:]
+        return {(b, "long"), (q, "short")} if side == "long" else {(b, "short"), (q, "long")}
+    return set()
+
+
+def _currency_cap_scale(blk: dict, ins: str, side: str, magic: int, positions, symbol_map) -> tuple[float, str]:
+    """Per-currency concentration cap (2026-10-26). Going into the Oct 24
+    weekend the book held four shorts on JPY crosses (CHFJPY, EURJPY, AUDJPY,
+    USDJPY) = one 8%-of-equity bet on JPY; all four were stopped at the Sunday
+    open (-1.59R combined, EURJPY gapped -1.17R). The correlation groups only
+    covered indices and gold/oil; FX pairs only became tradeable on 2026-10-20.
+    Backtest replay (3,991 FX trades 2023-26): stacked trades are NOT worse per
+    trade (k<2 vs k>=2 meanR -0.075 vs -0.070, p=0.92), so this is a variance
+    control, not an edge claim: scaling the 3rd+ same-direction position by
+    0.5 cut daily-R sd 4.58 -> 2.93 and worst day -14.4R -> -9.4R in the
+    max-overlap replay. Scale-in adds are not counted (they share a parent)."""
+    cc = blk.get("currency_cap", {})
+    if not cc.get("enabled", False):
+        return 1.0, ""
+    legs = _fx_legs(ins, side)
+    if not legs:
+        return 1.0, ""
+    counts: dict = {}
+    for p in positions:
+        if p.magic != magic:
+            continue
+        if (getattr(p, "comment", "") or "").startswith("fx-edge scale_in"):
+            continue
+        p_ins = _reverse_logical_name(p.symbol, symbol_map)
+        if p_ins is None or p_ins == ins:
+            continue
+        p_side = "long" if p.type == mt5.POSITION_TYPE_BUY else "short"
+        for leg in _fx_legs(p_ins, p_side) & legs:
+            counts[leg] = counts.get(leg, 0) + 1
+    if not counts:
+        return 1.0, ""
+    leg, n = max(counts.items(), key=lambda kv: kv[1])
+    max_n = int(cc.get("max_same_direction", 2))
+    if n >= max_n:
+        f = float(cc.get("scale_beyond", 0.5))
+        return f, (f"currency_cap({f}x): {n} open position(s) already {leg[1]} {leg[0]} "
+                   f"(max {max_n} at full size)")
     return 1.0, ""
 
 
@@ -1586,7 +1637,8 @@ def consider_instrument(ins: str, cfg: dict, state: State, cap_blocked: bool = F
     if corr_scale == 0.0:
         print(f"  [{ins}] skip: {corr_reason}")
         _log_signal(sig_ts, ins, side, float(cur_price), float(sl), float(tp),
-                     abs(cur_price - sl), "skipped", "correlation_skip")
+                     abs(cur_price - sl), "skipped",
+                     "currency_cap" if corr_reason.startswith("currency_cap") else "correlation_skip")
         return
     if corr_scale < 1.0:
         print(f"  [{ins}] {corr_reason}")
