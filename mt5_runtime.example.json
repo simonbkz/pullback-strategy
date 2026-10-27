@@ -797,7 +797,9 @@
       "enabled": true,
       "max_drift_R": 0.3,
       "min_rr": 2.0
-    }
+    },
+    "concurrency_shadow_max_risk_pct": 0.5,
+    "_concurrency_shadow_2026-10-27": "Positions on instruments whose tier base_risk_pct <= this value (nano-shadows at 0.2-0.3%) do not occupy a max_concurrent_positions slot. Oct 23: a 0.1% AUDJPY + half-throttled ETHUSD held 2/6 slots at 7% heat and blocked US100/UK100/USDJPY. 23 concurrency_cap skips in 5 days (CF +0.26R, n=11). Heat cap (30%) still governs. Set to 0 to restore the old count."
   },
   "regime_predictor": {
     "train_window": 2000,
@@ -2268,7 +2270,8 @@
       4,
       5
     ],
-    "_recalibrated_2026-10-22": "The Oct-7 analysis used entry_ts that was BROKER time (UTC+3) for 82% of trades, so '23-05' was really 20-02 UTC. On corrected UTC timestamps (n=128): live 23-05 block = blocked -0.28R vs kept +0.10R, p=0.14 (not significant; it was blocking 03-05 UTC which are mildly positive and leaving 20-22 UTC open, 20:00 = -1.05R). 20-02 UTC = blocked -0.56R (n=28) vs kept +0.18R, t=-3.51, p=0.003. Same finding, correct labels. Rollback: copy _prev_blocked_hours_utc back."
+    "_recalibrated_2026-10-22": "The Oct-7 analysis used entry_ts that was BROKER time (UTC+3) for 82% of trades, so '23-05' was really 20-02 UTC. On corrected UTC timestamps (n=128): live 23-05 block = blocked -0.28R vs kept +0.10R, p=0.14 (not significant; it was blocking 03-05 UTC which are mildly positive and leaving 20-22 UTC open, 20:00 = -1.05R). 20-02 UTC = blocked -0.56R (n=28) vs kept +0.18R, t=-3.51, p=0.003. Same finding, correct labels. Rollback: copy _prev_blocked_hours_utc back.",
+    "_fill_hour_semantics_2026-10-27": "blocked_hours_utc are FILL hours (entry_ts hour), matching the Oct 22 calibration. Until 2026-10-27 the gate tested the signal-bar label (fill - 1h), so it blocked fills 21-03 and left 20:xx open (-0.94R/5) while blocking 03:xx (+0.44R/4). _in_bad_hour now tests (bar_hour + 1) % 24. Counterfactual buckets bad_hour_NNUTC are fill-hour labelled from this date; earlier rows are bar-hour labelled."
   },
   "auto_exclusion": {
     "_comment": "Added 2026-10-07. Auto-skip entries on instruments whose rolling live expectancy is clearly bad AND which have been dormant. AND-gate: a losing-but-active instrument may be in a temporary rough patch; a losing-AND-dormant one has a structural strategy-choice mismatch (regime pulse surfaces this daily). Example: DE40 last 10 trades meanR -0.754R, dormant 48d -> auto-excl fires on next DE40 signal if any. 1-hour cache per instrument so journal isn't hit every poll.",

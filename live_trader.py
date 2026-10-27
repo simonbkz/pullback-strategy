@@ -578,7 +578,14 @@ def _in_bad_hour(cfg: dict, ts) -> tuple[bool, str]:
     if not blocked:
         return False, ""
     try:
-        h = int(ts.hour)
+        # 2026-10-27 (Monday audit): `ts` is the SIGNAL BAR's open label; the
+        # fill happens one hour later (bar closes, then we enter). The Oct 22
+        # recalibration measured bad hours on entry_ts = FILL hour, so the gate
+        # must test the fill hour -- testing the bar label blocked fills 21-03
+        # instead of 20-02 (fills at 20:xx were open at -0.94R/5 while 03:xx
+        # was blocked at +0.44R/4). blocked_hours_utc and the bad_hour_NNUTC
+        # counterfactual buckets are fill-hour labelled from this date on.
+        h = (int(ts.hour) + 1) % 24
     except Exception:
         return False, ""
     if h in blocked:
@@ -2032,7 +2039,11 @@ def process_closed_trades(state: State, magic: int, cfg: dict | None = None) -> 
                                   "stale_exit", "loss_cap", "system_close",
                                   "early_adverse_cut"}
             net = float(close_deal.profit) + float(getattr(close_deal, "commission", 0.0) or 0.0) + float(getattr(close_deal, "swap", 0.0) or 0.0)
-            if outcome in STRATEGY_OUTCOMES:
+            # 2026-10-27: scale-in adds lose ~11 of 16 closes BY DESIGN (their
+            # stop sits at the parent's entry) -- counting them inflated the
+            # streak and halved risk on the next full-size entries. Adds are
+            # excluded from every other throttle since Oct 22; exclude here too.
+            if outcome in STRATEGY_OUTCOMES and not meta.get("is_scale_in"):
                 if net < 0:
                     state.consecutive_losses += 1
                 elif net > 0:
@@ -3149,8 +3160,26 @@ def main_loop(cfg: dict, state: State):
             # otherwise one winner with an add burns two of the slots. Also log
             # when the cap blocks: on 2026-10-22 it silently ate 7 valid signals.
             positions = mt5.positions_get() or []
-            ours = [p for p in positions if p.magic == exe["magic_number"]
-                    and not (getattr(p, "comment", "") or "").startswith("fx-edge scale_in")]
+            # 2026-10-27 (Monday audit): nano-shadow data-collection positions
+            # (tier base_risk_pct <= execution.concurrency_shadow_max_risk_pct,
+            # e.g. the 0.1x FX/index shadows at 0.2%) were occupying full slots:
+            # on Oct 23 a 0.1% AUDJPY and a half-throttled ETHUSD held 2 of 6
+            # slots at 7% total heat and blocked three full-size signals. Shadows
+            # no longer count; portfolio_heat_cap_pct remains the hard governor.
+            _shadow_max = float(exe.get("concurrency_shadow_max_risk_pct", 0.0) or 0.0)
+            _symmap = cfg.get("symbol_map", {})
+            ours = []
+            for p in positions:
+                if p.magic != exe["magic_number"]:
+                    continue
+                if (getattr(p, "comment", "") or "").startswith("fx-edge scale_in"):
+                    continue
+                if _shadow_max > 0:
+                    p_ins = _reverse_logical_name(p.symbol, _symmap)
+                    t_risk = (cfg.get("tier_overrides", {}).get(p_ins, {}) or {}).get("base_risk_pct")
+                    if t_risk is not None and float(t_risk) <= _shadow_max:
+                        continue
+                ours.append(p)
             slot_open = len(ours) < max_concurrent
             global _CAP_BLOCK_LOGGED
             if not slot_open and _CAP_BLOCK_LOGGED != len(ours):
